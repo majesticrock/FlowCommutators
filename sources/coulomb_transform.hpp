@@ -38,10 +38,10 @@ inline std::string get_C_1(const SymbolicOperators::Momentum& k, const SymbolicO
                 const SymbolicOperators::Momentum& p, const SymbolicOperators::Momentum& q, const std::string& between_summands = "\\\\\n\t\t&") 
 {
     std::string str = "- V(" + k.to_string() + ", " + l.to_string() + ", " + q.to_string() + ") ";
-    str += "\\frac{" + get_coeff_A(k, p, true) + "}{|" + get_alpha(k, p) + "|}";
+    str += "\\frac{" + get_M(k, p, false, true) + " }{" + get_alpha(k, p) + "}";
 	str+= between_summands;
     str += " + V(" + (k + p).to_string() + ", " + l.to_string() + ", " + q.to_string() + ") ";
-    str += "\\frac{" + get_coeff_A(k + q, p, true) + "}{|" + get_alpha(k + q, p) + "|}";
+    str += "\\frac{" + get_M(k + q, p, false, true) + "}{" + get_alpha(k + q, p) + "}";
     return str;
 }
 
@@ -49,10 +49,10 @@ inline std::string get_C_2(const SymbolicOperators::Momentum& k, const SymbolicO
                 const SymbolicOperators::Momentum& p, const SymbolicOperators::Momentum& q, const std::string& between_summands = "\\\\\n\t\t&") 
 {
     std::string str = "+ V(" + k.to_string() + ", " + l.to_string() + ", " + q.to_string() + ") ";
-    str += "\\frac{" + get_coeff_B(k, p, true) + "}{|" + get_beta(k, p) + "|}";
+    str += "\\frac{" + get_M(k + p, -p, true, true) + "}{" + get_beta(k, p) + "}";
 	str+= between_summands;
     str += " - V(" + (k + p).to_string() + ", " + l.to_string() + ", " + q.to_string() + ") ";
-    str += "\\frac{" + get_coeff_B(k + q, p, true) + "}{|" + get_beta(k + q, p) + "|}";
+    str += "\\frac{" + get_M(k + p + q, -p, true, true) + "}{" + get_beta(k + q, p) + "}";
     return str;
 }
 

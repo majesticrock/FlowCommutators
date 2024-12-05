@@ -46,12 +46,12 @@ which has no two-electron interaction terms. Thus, we include the resulting term
 From this, we learn \begin{align*}
 	\partial_\lambda C_1(k,l,p,q) &= \sgn \left[\alpha (k, p)\right] M_{p} e^{ - | \alpha (k,p) | \lambda } V^\mathrm{sym}( k, l, q )  - \sgn \left[\alpha (k+q, p)\right] M_{p} e^{ - | \alpha (k+q,p) | \lambda } V^\mathrm{sym}( k+p, l, q ) . \end{align*}
 We assume $V(\lambda) \approx \mathrm{const}$ because it changes only in order $\mathcal{O}(M^2)$which makes its effect on $C_1$ of order $\mathcal{O}(M^3)$, which we neglect anyways. Thus, we get \begin{align*}
-	C_1(\lambda; k, l, p, q) =&- V(k, l, q) \frac{\sgn \left[\alpha (k, p)\right] M_{p} \left(  e^{ - | \alpha (k,p) | \lambda } - 1 \right)}{|\alpha (k, p)|}\\
-		& + V(k+p, l, q) \frac{\sgn \left[\alpha (k+q, p)\right] M_{p} \left(  e^{ - | \alpha (k+q,p) | \lambda } - 1 \right)}{|\alpha (k+q, p)|}\end{align*}
+	C_1(\lambda; k, l, p, q) =&- V(k, l, q) \frac{M_{p} \left(  e^{ - | \alpha (k,p) | \lambda } - 1 \right) }{\alpha (k, p)}\\
+		& + V(k+p, l, q) \frac{M_{p} \left(  e^{ - | \alpha (k+q,p) | \lambda } - 1 \right)}{\alpha (k+q, p)}\end{align*}
 and
 \begin{align*}
-	C_2(\lambda; k, l, p, q) =&+ V(k, l, q) \frac{\sgn \left[ \alpha (k+p, -p) \right] M_{-p}^* \left(  e^{ - | \alpha (k+p,-p) | \lambda } - 1 \right)}{|\alpha (k+p, -p)|}\\
-		& - V(k+p, l, q) \frac{\sgn \left[ \alpha (k+p+q, -p) \right] M_{-p}^* \left(  e^{ - | \alpha (k+p+q,-p) | \lambda } - 1 \right)}{|\alpha (k+p+q, -p)|}\end{align*}
+	C_2(\lambda; k, l, p, q) =&+ V(k, l, q) \frac{M_{-p}^* \left(  e^{ - | \alpha (k+p,-p) | \lambda } - 1 \right)}{\alpha (k+p, -p)}\\
+		& - V(k+p, l, q) \frac{M_{-p}^* \left(  e^{ - | \alpha (k+p+q,-p) | \lambda } - 1 \right)}{\alpha (k+p+q, -p)}\end{align*}
 We commute again with $H'$ and obtain
 \begin{align*}
 	[\eta, H'] = 	&+1 \cdot \sum_{ p l k q Q } \sum_{ \sigma \sigma' } A( l+q, p )  C_1( l, k, q, Q )   b_{ -q, }^\dagger  b_{ -p, }^\dagger  c_{ l+p+q, \sigma }^\dagger  c_{ k, \sigma' }^\dagger  c_{ -Q+k, \sigma' } c_{ Q+l, \sigma }  \\
@@ -95,16 +95,16 @@ Inserting the definitions for $A$ and $B$ yields
 We are allowed to transform $k \to l, l \to k, q \to -q$ without affecting the operators part of the terms. Therefore, the potential must also be symmetric under this transformation (or can be constructed as such). We perfom that in line 2 and 4. Then, we obtain by plugging in the results for $C_1$ and $C_2$
 \begin{align*}
 	\partial_{\lambda} V(\lambda; k, l, q) \approx - \sum_{p} \bigg\{ &+\sgn \left[\alpha (k+q, p)\right] M_{p} e^{ - | \alpha (k+q,p) | \lambda }\\
-		&\qquad\cdot\bigg[  + V(k+p, l, q) \frac{\sgn \left[ \alpha (k, p) \right] M_{p}^* \left(  e^{ - | \alpha (k,p) | \lambda } - 1 \right)}{|\alpha (k, p)|}\\
-		&\qquad - V(k, l, q) \frac{\sgn \left[ \alpha (k+q, p) \right] M_{p}^* \left(  e^{ - | \alpha (k+q,p) | \lambda } - 1 \right)}{|\alpha (k+q, p)|} \bigg]\\
+		&\qquad\cdot\bigg[  + V(k+p, l, q) \frac{M_{p}^* \left(  e^{ - | \alpha (k,p) | \lambda } - 1 \right)}{\alpha (k, p)}\\
+		&\qquad - V(k, l, q) \frac{M_{p}^* \left(  e^{ - | \alpha (k+q,p) | \lambda } - 1 \right)}{\alpha (k+q, p)} \bigg]\\
 	&+\sgn \left[\alpha (k+q, p)\right] M_{p} e^{ - | \alpha (k+q,p) | \lambda }\\
-		&\qquad\cdot\bigg[  + V(l+p, k, -p-q) \frac{\sgn \left[ \alpha (l, p) \right] M_{p}^* \left(  e^{ - | \alpha (l,p) | \lambda } - 1 \right)}{|\alpha (l, p)|}\\
-		&\qquad - V(l, k, -p-q) \frac{\sgn \left[ \alpha (l-p-q, p) \right] M_{p}^* \left(  e^{ - | \alpha (l-p-q,p) | \lambda } - 1 \right)}{|\alpha (l-p-q, p)|} \bigg]\\
+		&\qquad\cdot\bigg[  + V(l+p, k, -p-q) \frac{M_{p}^* \left(  e^{ - | \alpha (l,p) | \lambda } - 1 \right)}{\alpha (l, p)}\\
+		&\qquad - V(l, k, -p-q) \frac{M_{p}^* \left(  e^{ - | \alpha (l-p-q,p) | \lambda } - 1 \right)}{\alpha (l-p-q, p)} \bigg]\\
 	&+\sgn \left[ \alpha (k, p) \right] M_{p}^* e^{ - | \alpha (k,p) | \lambda }\\
-		&\qquad\cdot\bigg[  - V(k, l, q) \frac{\sgn \left[\alpha (k, p)\right] M_{p} \left(  e^{ - | \alpha (k,p) | \lambda } - 1 \right)}{|\alpha (k, p)|}\\
-		&\qquad + V(k+p, l, q) \frac{\sgn \left[\alpha (k+q, p)\right] M_{p} \left(  e^{ - | \alpha (k+q,p) | \lambda } - 1 \right)}{|\alpha (k+q, p)|} \bigg]\\
+		&\qquad\cdot\bigg[  - V(k, l, q) \frac{M_{p} \left(  e^{ - | \alpha (k,p) | \lambda } - 1 \right) }{\alpha (k, p)}\\
+		&\qquad + V(k+p, l, q) \frac{M_{p} \left(  e^{ - | \alpha (k+q,p) | \lambda } - 1 \right)}{\alpha (k+q, p)} \bigg]\\
 	&+\sgn \left[ \alpha (k, p) \right] M_{p}^* e^{ - | \alpha (k,p) | \lambda }\\
-		&\qquad\cdot\bigg[  - V(l-p, k+p, p-q) \frac{\sgn \left[\alpha (l-p, p)\right] M_{p} \left(  e^{ - | \alpha (l-p,p) | \lambda } - 1 \right)}{|\alpha (l-p, p)|}\\
-		&\qquad + V(l, k+p, p-q) \frac{\sgn \left[\alpha (l-q, p)\right] M_{p} \left(  e^{ - | \alpha (l-q,p) | \lambda } - 1 \right)}{|\alpha (l-q, p)|} \bigg]\\
+		&\qquad\cdot\bigg[  - V(l-p, k+p, p-q) \frac{M_{p} \left(  e^{ - | \alpha (l-p,p) | \lambda } - 1 \right) }{\alpha (l-p, p)}\\
+		&\qquad + V(l, k+p, p-q) \frac{M_{p} \left(  e^{ - | \alpha (l-q,p) | \lambda } - 1 \right)}{\alpha (l-q, p)} \bigg]\\
 	 \bigg\}
 \end{align*}
