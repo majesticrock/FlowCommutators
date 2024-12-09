@@ -12,12 +12,12 @@ because this quantity will appear throughout the flow.
 Our generator for the CUT is 
 \begin{align*}
 	\eta = 	&+1 \cdot \sum_{ P Q } \sum_{ S } A( P, Q )   b_{ -Q, }^\dagger  c_{ P+Q, S }^\dagger  c_{ P, S }  \\
-	&+1 \cdot \sum_{ P Q } \sum_{ S } B^*( P, Q )   b_{ Q, } c_{ P+Q, S }^\dagger  c_{ P, S } 
+	&-1 \cdot \sum_{ P Q } \sum_{ S } A^*( P+Q, -Q )   b_{ Q, } c_{ P+Q, S }^\dagger  c_{ P, S } 
 , \end{align*}
 where
 \begin{align}
 	A(P,Q) &= M_{P,Q} \sgn ( \epsilon_{P+Q} - \epsilon_P + \omega_{-Q} ) \\
-	B(P,Q) &= M_{P+Q,-Q}^* \sgn ( \epsilon_{P+Q} - \epsilon_P - \omega_Q ) = - A^* (P+Q, -Q)
+	B(P,Q) &= -M_{P+Q,-Q}^* \sgn ( \epsilon_{P+Q} - \epsilon_P - \omega_Q ) = A^* (P+Q, -Q)
 \end{align}
 
 The first commutation yields
@@ -26,17 +26,17 @@ The first commutation yields
 	&+(1/2) \cdot \sum_{ k l p q } \sum_{ \sigma \sigma' } A( k, p )  V( l, k, -q )   b_{ -p, }^\dagger  c_{ k+p, \sigma }^\dagger  c_{ l, \sigma' }^\dagger  c_{ l-q, \sigma' } c_{ k+q, \sigma }  \\
 	&-(1/2) \cdot \sum_{ k l p q } \sum_{ \sigma \sigma' } A( k+q, p )  V( k+p, l, q )   b_{ -p, }^\dagger  c_{ k+p, \sigma }^\dagger  c_{ l, \sigma' }^\dagger  c_{ l-q, \sigma' } c_{ k+q, \sigma }  \\
 	&-(1/2) \cdot \sum_{ k l p q } \sum_{ \sigma \sigma' } A( k+q, p )  V( l, k+p, -q )   b_{ -p, }^\dagger  c_{ k+p, \sigma }^\dagger  c_{ l, \sigma' }^\dagger  c_{ l-q, \sigma' } c_{ k+q, \sigma }  \\
-	&+(1/2) \cdot \sum_{ k l p q } \sum_{ \sigma \sigma' } B^*( k, p )  V( k, l, q )   b_{ p, } c_{ k+p, \sigma }^\dagger  c_{ l, \sigma' }^\dagger  c_{ l-q, \sigma' } c_{ k+q, \sigma }  \\
-	&+(1/2) \cdot \sum_{ k l p q } \sum_{ \sigma \sigma' } B^*( k, p )  V( l, k, -q )   b_{ p, } c_{ k+p, \sigma }^\dagger  c_{ l, \sigma' }^\dagger  c_{ l-q, \sigma' } c_{ k+q, \sigma }  \\
-	&-(1/2) \cdot \sum_{ k l p q } \sum_{ \sigma \sigma' } B^*( k+q, p )  V( k+p, l, q )   b_{ p, } c_{ k+p, \sigma }^\dagger  c_{ l, \sigma' }^\dagger  c_{ l-q, \sigma' } c_{ k+q, \sigma }  \\
-	&-(1/2) \cdot \sum_{ k l p q } \sum_{ \sigma \sigma' } B^*( k+q, p )  V( l, k+p, -q )   b_{ p, } c_{ k+p, \sigma }^\dagger  c_{ l, \sigma' }^\dagger  c_{ l-q, \sigma' } c_{ k+q, \sigma } 
+	&-(1/2) \cdot \sum_{ k l p q } \sum_{ \sigma \sigma' } A^*( k+p, -p )  V( k, l, q )   b_{ p, } c_{ k+p, \sigma }^\dagger  c_{ l, \sigma' }^\dagger  c_{ l-q, \sigma' } c_{ k+q, \sigma }  \\
+	&-(1/2) \cdot \sum_{ k l p q } \sum_{ \sigma \sigma' } A^*( k+p, -p )  V( l, k, -q )   b_{ p, } c_{ k+p, \sigma }^\dagger  c_{ l, \sigma' }^\dagger  c_{ l-q, \sigma' } c_{ k+q, \sigma }  \\
+	&+(1/2) \cdot \sum_{ k l p q } \sum_{ \sigma \sigma' } A^*( k+p+q, -p )  V( k+p, l, q )   b_{ p, } c_{ k+p, \sigma }^\dagger  c_{ l, \sigma' }^\dagger  c_{ l-q, \sigma' } c_{ k+q, \sigma }  \\
+	&+(1/2) \cdot \sum_{ k l p q } \sum_{ \sigma \sigma' } A^*( k+p+q, -p )  V( l, k+p, -q )   b_{ p, } c_{ k+p, \sigma }^\dagger  c_{ l, \sigma' }^\dagger  c_{ l-q, \sigma' } c_{ k+q, \sigma } 
 . \end{align*}
 Here, we recognize our $V^\mathrm{sym}$! Symplifying the expression to
 \begin{align*}
 	[\eta, H_\mathrm{C}] = 	&+1 \cdot \sum_{ k l p q } \sum_{ \sigma \sigma' } A( k, p )  V^\mathrm{sym}( k, l, q )   b_{ -p, }^\dagger  c_{ k+p, \sigma }^\dagger  c_{ l, \sigma' }^\dagger  c_{ l-q, \sigma' } c_{ k+q, \sigma }  \\
 	&-1 \cdot \sum_{ k l p q } \sum_{ \sigma \sigma' } A( k+q, p )  V^\mathrm{sym}( k+p, l, q )   b_{ -p, }^\dagger  c_{ k+p, \sigma }^\dagger  c_{ l, \sigma' }^\dagger  c_{ l-q, \sigma' } c_{ k+q, \sigma }  \\
-	&+1 \cdot \sum_{ k l p q } \sum_{ \sigma \sigma' } B^*( k, p )  V^\mathrm{sym}( k, l, q )   b_{ p, } c_{ k+p, \sigma }^\dagger  c_{ l, \sigma' }^\dagger  c_{ l-q, \sigma' } c_{ k+q, \sigma }  \\
-	&-1 \cdot \sum_{ k l p q } \sum_{ \sigma \sigma' } B^*( k+q, p )  V^\mathrm{sym}( k+p, l, q )   b_{ p, } c_{ k+p, \sigma }^\dagger  c_{ l, \sigma' }^\dagger  c_{ l-q, \sigma' } c_{ k+q, \sigma } 
+	&-1 \cdot \sum_{ k l p q } \sum_{ \sigma \sigma' } A^*( k+p, -p )  V^\mathrm{sym}( k, l, q )   b_{ p, } c_{ k+p, \sigma }^\dagger  c_{ l, \sigma' }^\dagger  c_{ l-q, \sigma' } c_{ k+q, \sigma }  \\
+	&+1 \cdot \sum_{ k l p q } \sum_{ \sigma \sigma' } A^*( k+p+q, -p )  V^\mathrm{sym}( k+p, l, q )   b_{ p, } c_{ k+p, \sigma }^\dagger  c_{ l, \sigma' }^\dagger  c_{ l-q, \sigma' } c_{ k+q, \sigma } 
 , \end{align*}
 which has no two-electron interaction terms. Thus, we include the resulting terms into our Hamiltonian as 
 \begin{align*}
@@ -44,7 +44,10 @@ which has no two-electron interaction terms. Thus, we include the resulting term
 	&+1 \cdot \sum_{ k l p q } \sum_{ \sigma \sigma' } C_2( k, l, p, q )   b_{ p, } c_{ k+p, \sigma }^\dagger  c_{ l, \sigma' }^\dagger  c_{ l-q, \sigma' } c_{ k+q, \sigma } 
 . \end{align*}
 From this, we learn \begin{align*}
-	\partial_\lambda C_1(k,l,p,q) &= \sgn \left[\alpha (k, p)\right] M_{p} e^{ - | \alpha (k,p) | \lambda } V^\mathrm{sym}( k, l, q )  - \sgn \left[\alpha (k+q, p)\right] M_{p} e^{ - | \alpha (k+q,p) | \lambda } V^\mathrm{sym}( k+p, l, q ) . \end{align*}
+	\partial_\lambda C_1(k,l,p,q) =&+ \sgn \left[\alpha (k, p)\right] M_{p} e^{ - | \alpha (k,p) | \lambda } V^\mathrm{sym}( k, l, q ) \\
+	&- \sgn \left[\alpha (k+q, p)\right] M_{p} e^{ - | \alpha (k+q,p) | \lambda } V^\mathrm{sym}( k+p, l, q ) \\
+	\partial_\lambda C_2(k,l,p,q) =& -\sgn \left[ \alpha (k+p, -p) \right] M_{-p}^* e^{ - | \alpha (k+p,-p) | \lambda } V^\mathrm{sym}( k, l, q ) \\
+	&+ \sgn \left[ \alpha (k+p+q, -p) \right] M_{-p}^* e^{ - | \alpha (k+p+q,-p) | \lambda } V^\mathrm{sym}( k+p, l, q ) . \end{align*}
 We assume $V(\lambda) \approx \mathrm{const}$ because it changes only in order $\mathcal{O}(M^2)$which makes its effect on $C_1$ of order $\mathcal{O}(M^3)$, which we neglect anyways. Thus, we get \begin{align*}
 	C_1(\lambda; k, l, p, q) =&- V(k, l, q) \frac{M_{p} \left(  e^{ - | \alpha (k,p) | \lambda } - 1 \right) }{\alpha (k, p)}\\
 		& + V(k+p, l, q) \frac{M_{p} \left(  e^{ - | \alpha (k+q,p) | \lambda } - 1 \right)}{\alpha (k+q, p)}\end{align*}
@@ -65,33 +68,27 @@ We commute again with $H'$ and obtain
 	&-1 \cdot \sum_{ p l k q Q } \sum_{ \sigma \sigma' } A( -Q+k-p, p )  C_2( l, k, q, Q )   b_{ -p, }^\dagger  b_{ q, } c_{ l+q, \sigma }^\dagger  c_{ k, \sigma' }^\dagger  c_{ -Q+k-p, \sigma' } c_{ Q+l, \sigma }  \\
 	&-1 \cdot \sum_{ p l k q } \sum_{ \sigma \sigma' } A( k+p+q, -k )  C_2( p, l, k, q )   c_{ k+p, \sigma }^\dagger  c_{ l, \sigma' }^\dagger  c_{ l-q, \sigma' } c_{ k+p+q, \sigma }  \\
 	&-1 \cdot \sum_{ p l k q } \sum_{ \sigma \sigma' } A( k+l-q, -k )  C_2( p, l, k, q )   c_{ k+p, \sigma }^\dagger  c_{ l, \sigma' }^\dagger  c_{ k+l-q, \sigma' } c_{ p+q, \sigma }  \\
-	&+1 \cdot \sum_{ p l k q Q } \sum_{ S \sigma \sigma' } B^*( p, -q )  C_1( l, k, q, Q )   c_{ l+q, \sigma }^\dagger  c_{ k, \sigma' }^\dagger  c_{ p-q, S }^\dagger  c_{ p, S } c_{ -Q+k, \sigma' } c_{ Q+l, \sigma }  \\
-	&+1 \cdot \sum_{ p l k q Q } \sum_{ \sigma \sigma' } B^*( l+q, p )  C_1( l, k, q, Q )   b_{ -q, }^\dagger  b_{ p, } c_{ l+p+q, \sigma }^\dagger  c_{ k, \sigma' }^\dagger  c_{ -Q+k, \sigma' } c_{ Q+l, \sigma }  \\
-	&+1 \cdot \sum_{ p l k q Q } \sum_{ \sigma \sigma' } B^*( k, p )  C_1( l, k, q, Q )   b_{ -q, }^\dagger  b_{ p, } c_{ l+q, \sigma }^\dagger  c_{ k+p, \sigma' }^\dagger  c_{ -Q+k, \sigma' } c_{ Q+l, \sigma }  \\
-	&-1 \cdot \sum_{ p l k q Q } \sum_{ \sigma \sigma' } B^*( Q+l-p, p )  C_1( l, k, q, Q )   b_{ -q, }^\dagger  b_{ p, } c_{ l+q, \sigma }^\dagger  c_{ k, \sigma' }^\dagger  c_{ -Q+k, \sigma' } c_{ Q+l-p, \sigma }  \\
-	&-1 \cdot \sum_{ p l k q Q } \sum_{ \sigma \sigma' } B^*( -Q+k-p, p )  C_1( l, k, q, Q )   b_{ -q, }^\dagger  b_{ p, } c_{ l+q, \sigma }^\dagger  c_{ k, \sigma' }^\dagger  c_{ -Q+k-p, \sigma' } c_{ Q+l, \sigma }  \\
-	&+1 \cdot \sum_{ p l k q } \sum_{ \sigma \sigma' } B^*( k+p, -k )  C_1( p, l, k, q )   c_{ p, \sigma }^\dagger  c_{ l, \sigma' }^\dagger  c_{ l-q, \sigma' } c_{ p+q, \sigma }  \\
-	&+1 \cdot \sum_{ p l k q } \sum_{ \sigma \sigma' } B^*( l, -k )  C_1( p, l, k, q )   c_{ k+p, \sigma }^\dagger  c_{ -k+l, \sigma' }^\dagger  c_{ l-q, \sigma' } c_{ p+q, \sigma }  \\
-	&+1 \cdot \sum_{ p l k q Q } \sum_{ \sigma \sigma' } B^*( l+q, p )  C_2( l, k, q, Q )   b_{ q, } b_{ p, } c_{ l+p+q, \sigma }^\dagger  c_{ k, \sigma' }^\dagger  c_{ -Q+k, \sigma' } c_{ Q+l, \sigma }  \\
-	&+1 \cdot \sum_{ p l k q Q } \sum_{ \sigma \sigma' } B^*( k, p )  C_2( l, k, q, Q )   b_{ q, } b_{ p, } c_{ l+q, \sigma }^\dagger  c_{ k+p, \sigma' }^\dagger  c_{ -Q+k, \sigma' } c_{ Q+l, \sigma }  \\
-	&-1 \cdot \sum_{ p l k q Q } \sum_{ \sigma \sigma' } B^*( Q+l-p, p )  C_2( l, k, q, Q )   b_{ q, } b_{ p, } c_{ l+q, \sigma }^\dagger  c_{ k, \sigma' }^\dagger  c_{ -Q+k, \sigma' } c_{ Q+l-p, \sigma }  \\
-	&-1 \cdot \sum_{ p l k q Q } \sum_{ \sigma \sigma' } B^*( -Q+k-p, p )  C_2( l, k, q, Q )   b_{ q, } b_{ p, } c_{ l+q, \sigma }^\dagger  c_{ k, \sigma' }^\dagger  c_{ -Q+k-p, \sigma' } c_{ Q+l, \sigma } 
+	&-1 \cdot \sum_{ p l k q Q } \sum_{ S \sigma \sigma' } A^*( p-q, q )  C_1( l, k, q, Q )   c_{ l+q, \sigma }^\dagger  c_{ k, \sigma' }^\dagger  c_{ p-q, S }^\dagger  c_{ p, S } c_{ -Q+k, \sigma' } c_{ Q+l, \sigma }  \\
+	&-1 \cdot \sum_{ p l k q Q } \sum_{ \sigma \sigma' } A^*( l+p+q, -p )  C_1( l, k, q, Q )   b_{ -q, }^\dagger  b_{ p, } c_{ l+p+q, \sigma }^\dagger  c_{ k, \sigma' }^\dagger  c_{ -Q+k, \sigma' } c_{ Q+l, \sigma }  \\
+	&-1 \cdot \sum_{ p l k q Q } \sum_{ \sigma \sigma' } A^*( k+p, -p )  C_1( l, k, q, Q )   b_{ -q, }^\dagger  b_{ p, } c_{ l+q, \sigma }^\dagger  c_{ k+p, \sigma' }^\dagger  c_{ -Q+k, \sigma' } c_{ Q+l, \sigma }  \\
+	&+1 \cdot \sum_{ p l k q Q } \sum_{ \sigma \sigma' } A^*( Q+l, -p )  C_1( l, k, q, Q )   b_{ -q, }^\dagger  b_{ p, } c_{ l+q, \sigma }^\dagger  c_{ k, \sigma' }^\dagger  c_{ -Q+k, \sigma' } c_{ Q+l-p, \sigma }  \\
+	&+1 \cdot \sum_{ p l k q Q } \sum_{ \sigma \sigma' } A^*( -Q+k, -p )  C_1( l, k, q, Q )   b_{ -q, }^\dagger  b_{ p, } c_{ l+q, \sigma }^\dagger  c_{ k, \sigma' }^\dagger  c_{ -Q+k-p, \sigma' } c_{ Q+l, \sigma }  \\
+	&-1 \cdot \sum_{ p l k q } \sum_{ \sigma \sigma' } A^*( p, k )  C_1( p, l, k, q )   c_{ p, \sigma }^\dagger  c_{ l, \sigma' }^\dagger  c_{ l-q, \sigma' } c_{ p+q, \sigma }  \\
+	&-1 \cdot \sum_{ p l k q } \sum_{ \sigma \sigma' } A^*( -k+l, k )  C_1( p, l, k, q )   c_{ k+p, \sigma }^\dagger  c_{ -k+l, \sigma' }^\dagger  c_{ l-q, \sigma' } c_{ p+q, \sigma }  \\
+	&-1 \cdot \sum_{ p l k q Q } \sum_{ \sigma \sigma' } A^*( l+p+q, -p )  C_2( l, k, q, Q )   b_{ q, } b_{ p, } c_{ l+p+q, \sigma }^\dagger  c_{ k, \sigma' }^\dagger  c_{ -Q+k, \sigma' } c_{ Q+l, \sigma }  \\
+	&-1 \cdot \sum_{ p l k q Q } \sum_{ \sigma \sigma' } A^*( k+p, -p )  C_2( l, k, q, Q )   b_{ q, } b_{ p, } c_{ l+q, \sigma }^\dagger  c_{ k+p, \sigma' }^\dagger  c_{ -Q+k, \sigma' } c_{ Q+l, \sigma }  \\
+	&+1 \cdot \sum_{ p l k q Q } \sum_{ \sigma \sigma' } A^*( Q+l, -p )  C_2( l, k, q, Q )   b_{ q, } b_{ p, } c_{ l+q, \sigma }^\dagger  c_{ k, \sigma' }^\dagger  c_{ -Q+k, \sigma' } c_{ Q+l-p, \sigma }  \\
+	&+1 \cdot \sum_{ p l k q Q } \sum_{ \sigma \sigma' } A^*( -Q+k, -p )  C_2( l, k, q, Q )   b_{ q, } b_{ p, } c_{ l+q, \sigma }^\dagger  c_{ k, \sigma' }^\dagger  c_{ -Q+k-p, \sigma' } c_{ Q+l, \sigma } 
 \end{align*}
 Here, we want to omit all terms with bosonic creation/annihilation operators, claiming them to be small. We proceed in the same manner with hexatic terms.
 It is also nice to directly sort the summations so that the operators appear as they do in the Coulomb interaction. This yields
 \begin{align*}
 	[\eta, H'] \approx 	&-1 \cdot \sum_{ p l k q } \sum_{ \sigma \sigma' } A( k+q, p )  C_2( k+p, l, -p, q )   c_{ k, \sigma }^\dagger  c_{ l, \sigma' }^\dagger  c_{ l-q, \sigma' } c_{ k+q, \sigma }  \\
 	&-1 \cdot \sum_{ p l k q } \sum_{ \sigma \sigma' } A( l-q, p )  C_2( k+p, l, -p, -p+q )   c_{ k, \sigma }^\dagger  c_{ l, \sigma' }^\dagger  c_{ l-q, \sigma' } c_{ k+q, \sigma }  \\
-	&+1 \cdot \sum_{ k l p q } \sum_{ \sigma \sigma' } B^*( k+p, -p )  C_1( k, l, p, q )   c_{ k, \sigma }^\dagger  c_{ l, \sigma' }^\dagger  c_{ l-q, \sigma' } c_{ k+q, \sigma }  \\
-	&+1 \cdot \sum_{ p l k q } \sum_{ \sigma \sigma' } B^*( l-p, p )  C_1( k+p, l-p, -p, -p+q )   c_{ k, \sigma }^\dagger  c_{ l, \sigma' }^\dagger  c_{ l-q, \sigma' } c_{ k+q, \sigma } 
+	&-1 \cdot \sum_{ k l p q } \sum_{ \sigma \sigma' } A^*( k, p )  C_1( k, l, p, q )   c_{ k, \sigma }^\dagger  c_{ l, \sigma' }^\dagger  c_{ l-q, \sigma' } c_{ k+q, \sigma }  \\
+	&-1 \cdot \sum_{ p l k q } \sum_{ \sigma \sigma' } A^*( l, -p )  C_1( k+p, l-p, -p, -p+q )   c_{ k, \sigma }^\dagger  c_{ l, \sigma' }^\dagger  c_{ l-q, \sigma' } c_{ k+q, \sigma } 
 \end{align*}
-Inserting the definitions for $A$ and $B$ yields
-\begin{align*}
-	\partial_{\lambda} V(\lambda; k, l, q) \approx - \sum_{p} \bigg\{ &M_{\lambda}( k+q, p )  \sgn \left[ \epsilon( k+p+q )  - \epsilon( k+q ) +\omega( -p )  \right]C_2( k+p, l, -p, q ) \\
-	+ &M_{\lambda}( l-q, p )  \sgn \left[ \epsilon( l+p-q )  - \epsilon( l-q ) +\omega( -p )  \right]C_2( k+p, l, -p, -p+q ) \\
-	+ &M_{\lambda}^*( k, p )  \sgn \left[ \epsilon( k )  - \epsilon( k+p ) -\omega( -p )  \right]C_1( k, l, p, q ) \\
-	+ &M_{\lambda}^*( l, p )  \sgn \left[ \epsilon( l )  - \epsilon( l+p ) -\omega( -p )  \right]C_1( k-p, l+p, p, p+q )  \bigg\}
-\end{align*}
+\newpage
 We are allowed to transform $k \to l, l \to k, q \to -q$ without affecting the operators part of the terms. Therefore, the potential must also be symmetric under this transformation (or can be constructed as such). We perfom that in line 2 and 4. Then, we obtain by plugging in the results for $C_1$ and $C_2$
 \begin{align*}
 	\partial_{\lambda} V(\lambda; k, l, q) \approx - \sum_{p} \bigg\{ &+\sgn \left[\alpha (k+q, p)\right] M_{p} e^{ - | \alpha (k+q,p) | \lambda }\\
@@ -100,10 +97,10 @@ We are allowed to transform $k \to l, l \to k, q \to -q$ without affecting the o
 	&+\sgn \left[\alpha (k+q, p)\right] M_{p} e^{ - | \alpha (k+q,p) | \lambda }\\
 		&\qquad\cdot\bigg[  + V(l+p, k, -p-q) \frac{M_{p}^* \left(  e^{ - | \alpha (l,p) | \lambda } - 1 \right)}{\alpha (l, p)}\\
 		&\qquad - V(l, k, -p-q) \frac{M_{p}^* \left(  e^{ - | \alpha (l-p-q,p) | \lambda } - 1 \right)}{\alpha (l-p-q, p)} \bigg]\\
-	&+\sgn \left[ \alpha (k, p) \right] M_{p}^* e^{ - | \alpha (k,p) | \lambda }\\
+	&+\sgn \left[\alpha (k, p)\right] M_{p}^* e^{ - | \alpha (k,p) | \lambda }\\
 		&\qquad\cdot\bigg[  - V(k, l, q) \frac{M_{p} \left(  e^{ - | \alpha (k,p) | \lambda } - 1 \right) }{\alpha (k, p)}\\
 		&\qquad + V(k+p, l, q) \frac{M_{p} \left(  e^{ - | \alpha (k+q,p) | \lambda } - 1 \right)}{\alpha (k+q, p)} \bigg]\\
-	&+\sgn \left[ \alpha (k, p) \right] M_{p}^* e^{ - | \alpha (k,p) | \lambda }\\
+	&+\sgn \left[\alpha (k, p)\right] M_{p}^* e^{ - | \alpha (k,p) | \lambda }\\
 		&\qquad\cdot\bigg[  - V(l-p, k+p, p-q) \frac{M_{p} \left(  e^{ - | \alpha (l-p,p) | \lambda } - 1 \right) }{\alpha (l-p, p)}\\
 		&\qquad + V(l, k+p, p-q) \frac{M_{p} \left(  e^{ - | \alpha (l-q,p) | \lambda } - 1 \right)}{\alpha (l-q, p)} \bigg]\\
 	 \bigg\}
