@@ -270,6 +270,12 @@ inline void coulomb_transform() {
 		term.rename_momenta('t', 'Q');
 	}
 
+	std::ranges::sort(second_commutation_result, [](const Term& l, const Term& r) { 
+		if (l.count_fermions() < r.count_fermions()) return true;
+		else if (l.count_fermions() > r.count_fermions()) return false;
+		return l.operators.size() < r.operators.size();
+		});
+
 	std::cout << "We commute again with $H'$ and obtain" << std::endl;
 	std::cout << "\\begin{align*}\n\t[\\eta, H'] = "
 		<< second_commutation_result
@@ -277,6 +283,9 @@ inline void coulomb_transform() {
 	std::cout << "Here, we want to omit all terms with bosonic creation/annihilation operators, claiming them to be small. " 
 		<< "We proceed in the same manner with hexatic terms." << std::endl;
 	std::cout << "It is also nice to directly sort the summations so that the operators appear as they do in the Coulomb interaction. This yields" << std::endl;
+
+	std::vector<Term> hexatic_contribution(std::ranges::count_if(second_commutation_result, [](const Term& term) { return (term.count_fermions() == 6); }));
+	std::copy_if(second_commutation_result.begin(), second_commutation_result.end(), hexatic_contribution.begin(), [](const Term& term) { return (term.count_fermions() == 6); });
 
 	std::erase_if(second_commutation_result, [](const Term& term) { return (term.contains_boson() || term.operators.size() == 6U); });
 
@@ -332,20 +341,22 @@ inline void coulomb_transform() {
 	{
 		// We are allowed to change the p in any manner we like - to obtain the same notation across all terms we do the following:
 		Term* term_ptr = &(second_commutation_result[0]);
-		// \sum_{ p l k q } \sum_{ \sigma \sigma' } A( k+q, -k+p )  C_2( p, l, k-p, q )   c_{ k, \sigma }^\dagger  c_{ l, \sigma' }^\dagger  c_{ l-q, \sigma' } c_{ k+q, \sigma }
-		Momentum replacement = Momentum('x') + Momentum('k');
+		Momentum replacement = Momentum("x+k");
 		term_ptr->transform_momentum_sum('p', replacement, 'x');
 		term_ptr->rename_momenta('x', 'p');
+		term_ptr->swap_momenta('k', 'l');
+		term_ptr->invert_momentum_sum('q');
 
-		term_ptr = &(second_commutation_result[1]);
-		// \sum_{ p l k q } \sum_{ \sigma \sigma' } A( l-q, -k+p )  C_2( p, l, k-p, k-p+q )   c_{ k, \sigma }^\dagger  c_{ l, \sigma' }^\dagger  c_{ l-q, \sigma' } c_{ k+q, \sigma }
+		term_ptr = &(second_commutation_result[2]);
 		term_ptr->transform_momentum_sum('p', replacement, 'x');
 		term_ptr->rename_momenta('x', 'p');
 
 		term_ptr = &(second_commutation_result[3]);
-		// \sum_{ p l k q } \sum_{ \sigma \sigma' } B( k+l-p, -k+p )  C_1( p, k+l-p, k-p, k-p+q )   c_{ k, \sigma }^\dagger  c_{ l, \sigma' }^\dagger  c_{ l-q, \sigma' } c_{ k+q, \sigma } 
 		term_ptr->transform_momentum_sum('p', replacement, 'x');
 		term_ptr->rename_momenta('x', 'p');
+		term_ptr->invert_momentum_sum('p');
+		term_ptr->swap_momenta('k', 'l');
+		term_ptr->invert_momentum_sum('q');
 	}
 
 	std::cout << "\\begin{align*}\n\t[\\eta, H'] \\approx "
@@ -397,11 +408,10 @@ inline void coulomb_transform() {
 	}
 	std::cout << " \\bigg\\}\n\\end{align*}" << std::endl;*/
 
-	second_commutation_result[1].swap_momenta('k', 'l');
-	second_commutation_result[1].invert_momentum('q');
-
-	second_commutation_result[3].swap_momenta('k', 'l');
-	second_commutation_result[3].invert_momentum('q');
+	//second_commutation_result[0].swap_momenta('k', 'l');
+	//second_commutation_result[0].invert_momentum('q');
+	//second_commutation_result[1].swap_momenta('k', 'l');
+	//second_commutation_result[1].invert_momentum('q');
 
 	std::cout << "\\newpage\nWe are allowed to transform $k \\to l, l \\to k, q \\to -q$ without affecting the operators part of the terms. "
 		<< "Therefore, the potential must also be symmetric under this transformation (or can be constructed as such). We perfom that in line 2 and 4. "
@@ -433,4 +443,9 @@ inline void coulomb_transform() {
         std::cout << "\\\\\n\t";
     }
 	std::cout << " \\bigg\\}\n\\end{align*}" << std::endl;
+
+	std::cout << "Finally, we shall have a look at the hexatic contributions" << std::endl;
+	std::cout << "\\begin{align*}\n\t[\\eta, H'] \\vert_\\mathrm{hexatic} = "
+		<< hexatic_contribution
+		<< "\\end{align*}" << std::endl;
 }
