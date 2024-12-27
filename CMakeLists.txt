@@ -41,8 +41,8 @@ target_include_directories(FlowCommutators PRIVATE ${Boost_INCLUDE_DIRS})
 
 find_package(SymbolicOperators REQUIRED)
 target_include_directories(FlowCommutators PRIVATE ${SymbolicOperators_INCLUDE_DIRS})
-target_link_libraries(FlowCommutators PRIVATE SymbolicOperators::SymbolicOperators)
+target_link_libraries(FlowCommutators PRIVATE mrock::SymbolicOperators::SymbolicOperators)
 
 find_package(Utility REQUIRED)
 target_include_directories(FlowCommutators PRIVATE ${Utility_INCLUDE_DIRS})
-target_link_libraries(FlowCommutators PRIVATE Utility::Utility)
+target_link_libraries(FlowCommutators PRIVATE mrock::Utility::Utility)

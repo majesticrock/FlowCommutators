@@ -1,10 +1,10 @@
 #pragma once
-#include <SymbolicOperators/Term.hpp>
+#include <mrock/SymbolicOperators/Term.hpp>
 #include <vector>
 #include <utility>
 
 inline void phonon_first_order() {
-    using namespace SymbolicOperators;
+    using namespace mrock::SymbolicOperators;
     const std::string PHONON_V_NAME = "V_\\mathrm{ph}";
 
     const std::vector<Term> CUT_eta({ 

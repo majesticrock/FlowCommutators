@@ -1,11 +1,11 @@
 #pragma once
-#include <SymbolicOperators/Term.hpp>
+#include <mrock/SymbolicOperators/Term.hpp>
 #include <vector>
 #include <array>
 #include <algorithm>
 
 
-inline std::string get_M(const SymbolicOperators::Momentum& k, const SymbolicOperators::Momentum& q, bool conjugate, bool minus_at_0 = false) {
+inline std::string get_M(const mrock::SymbolicOperators::Momentum& k, const mrock::SymbolicOperators::Momentum& q, bool conjugate, bool minus_at_0 = false) {
     std::string str = "M_{" + q.to_string() + "}";
     if (conjugate) str += "^*";
 	if (minus_at_0) str += " \\left( ";
@@ -14,28 +14,28 @@ inline std::string get_M(const SymbolicOperators::Momentum& k, const SymbolicOpe
     return str;
 }
 
-inline std::string get_alpha(const SymbolicOperators::Momentum& k, const SymbolicOperators::Momentum& q) {
+inline std::string get_alpha(const mrock::SymbolicOperators::Momentum& k, const mrock::SymbolicOperators::Momentum& q) {
 	return ("\\alpha (" + k.to_string() + ", " + q.to_string() + ")");
 }
 
-inline std::string get_beta(const SymbolicOperators::Momentum& k, const SymbolicOperators::Momentum& q) {
+inline std::string get_beta(const mrock::SymbolicOperators::Momentum& k, const mrock::SymbolicOperators::Momentum& q) {
 	return ("\\alpha (" + (k + q).to_string() + ", " + (-q).to_string() + ")");
 }
 
-inline std::string get_coeff_A(const SymbolicOperators::Momentum& k, const SymbolicOperators::Momentum& q, bool minus_at_0 = false, bool conjugate = false) {
+inline std::string get_coeff_A(const mrock::SymbolicOperators::Momentum& k, const mrock::SymbolicOperators::Momentum& q, bool minus_at_0 = false, bool conjugate = false) {
     std::string str = "\\sgn \\left[" + get_alpha(k, q) + "\\right] ";
     str += get_M(k, q, conjugate, minus_at_0);
     return str;
 }
 
-inline std::string get_coeff_B(const SymbolicOperators::Momentum& k, const SymbolicOperators::Momentum& q, bool minus_at_0 = false, bool conjugate = false) {
+inline std::string get_coeff_B(const mrock::SymbolicOperators::Momentum& k, const mrock::SymbolicOperators::Momentum& q, bool minus_at_0 = false, bool conjugate = false) {
     std::string str = "\\sgn \\left[ " + get_beta(k, q) + " \\right] ";
     str += get_M(k + q, -q, !conjugate, minus_at_0);
     return str;
 }
 
-inline std::string get_C_1(const SymbolicOperators::Momentum& k, const SymbolicOperators::Momentum& l, 
-                const SymbolicOperators::Momentum& p, const SymbolicOperators::Momentum& q, const std::string& between_summands = "\\\\\n\t\t&", bool conjugate = false) 
+inline std::string get_C_1(const mrock::SymbolicOperators::Momentum& k, const mrock::SymbolicOperators::Momentum& l, 
+                const mrock::SymbolicOperators::Momentum& p, const mrock::SymbolicOperators::Momentum& q, const std::string& between_summands = "\\\\\n\t\t&", bool conjugate = false) 
 {
     std::string str = "- V(" + k.to_string() + ", " + l.to_string() + ", " + q.to_string() + ") ";
     str += "\\frac{" + get_M(k, p, conjugate, true) + " }{" + get_alpha(k, p) + "}";
@@ -45,8 +45,8 @@ inline std::string get_C_1(const SymbolicOperators::Momentum& k, const SymbolicO
     return str;
 }
 
-inline std::string get_C_2(const SymbolicOperators::Momentum& k, const SymbolicOperators::Momentum& l, 
-                const SymbolicOperators::Momentum& p, const SymbolicOperators::Momentum& q, const std::string& between_summands = "\\\\\n\t\t&", bool conjugate = false) 
+inline std::string get_C_2(const mrock::SymbolicOperators::Momentum& k, const mrock::SymbolicOperators::Momentum& l, 
+                const mrock::SymbolicOperators::Momentum& p, const mrock::SymbolicOperators::Momentum& q, const std::string& between_summands = "\\\\\n\t\t&", bool conjugate = false) 
 {
     std::string str = "+ V(" + k.to_string() + ", " + l.to_string() + ", " + q.to_string() + ") ";
     str += "\\frac{" + get_M(k + p, -p, !conjugate, true) + "}{" + get_beta(k, p) + "}";
@@ -57,7 +57,7 @@ inline std::string get_C_2(const SymbolicOperators::Momentum& k, const SymbolicO
 }
 
 inline void coulomb_transform() {
-    using namespace SymbolicOperators;
+    using namespace mrock::SymbolicOperators;
 
     const Term H_C(IntFractional(1, 4), 
 		Coefficient("V", MomentumList({ 'k', 'l', 'q' }), IndexWrapper{}, false, false),
