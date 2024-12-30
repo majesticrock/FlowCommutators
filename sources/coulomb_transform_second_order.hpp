@@ -1,12 +1,12 @@
 #pragma once
-#include <mrock/SymbolicOperators/Term.hpp>
+#include <mrock/symbolic_operators/Term.hpp>
 #include <vector>
 #include <array>
 #include <algorithm>
 
 
 inline void coulomb_transform_second_order() {
-	using namespace mrock::SymbolicOperators;
+	using namespace mrock::symbolic_operators;
 
 	const Term H_C(IntFractional(1, 2),
 		Coefficient("V", MomentumList({ 'k', 'l', 'q' }), IndexWrapper{}, false, false),

@@ -2,7 +2,7 @@
 #include "phonon_higher_order.hpp"
 #include "phonon_first_order.hpp"
 
-using namespace mrock::SymbolicOperators;
+using namespace mrock::symbolic_operators;
 
 int main(int argc, char** argv) {
 	//phonon_first_order();
