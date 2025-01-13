@@ -70,7 +70,7 @@ inline void phonon_higher_order() {
 
 	std::vector<Term> commutation_result;
 	commutator(commutation_result, eta_prime, H_original);
-	cleanUp(commutation_result);
+	clean_up(commutation_result);
 
 	std::erase_if(commutation_result, [](const Term& term) -> bool {
 		if (term.operators.size() > 5U) return true;

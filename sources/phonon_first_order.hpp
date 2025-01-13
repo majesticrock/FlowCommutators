@@ -82,7 +82,7 @@ inline void phonon_first_order() {
 
     std::vector<Term> commutation_result;
 	commutator(commutation_result, CUT_eta, H_original);
-	cleanUp(commutation_result);
+	clean_up(commutation_result);
 
 	for(auto& term : commutation_result) {
 		if (std::find(term.sums.spins.begin(), term.sums.spins.end(), Index::GeneralSpin_S) != term.sums.spins.end()) {

@@ -114,7 +114,7 @@ inline void coulomb_transform() {
 
 	std::vector<Term> commutation_result;
 	commutator(commutation_result, CUT_eta, H_sym);
-	cleanUp(commutation_result);
+	clean_up(commutation_result);
 	for (auto& term : commutation_result) {
 		term.rename_momenta('q', 'x');
 		term.rename_momenta('p', 'k');
@@ -182,7 +182,7 @@ inline void coulomb_transform() {
 			std::swap(coeff.momenta[0], coeff.momenta[1]);
 		}
 		if (coeff.momenta[2] == Momentum('q', -1)) {
-			coeff.momenta[2].flipMomentum();
+			coeff.momenta[2].flip_momentum();
 		}
 		coeff.name = "V^\\mathrm{sym}";
 	}
@@ -261,7 +261,7 @@ inline void coulomb_transform() {
 
 	std::vector<Term> second_commutation_result;
 	commutator(second_commutation_result, CUT_eta, H_prime);
-	cleanUp(second_commutation_result);
+	clean_up(second_commutation_result);
 	for (auto& term : second_commutation_result) {
 		term.rename_momenta('p', 'l');
 		term.rename_momenta('q', 'p');
@@ -326,7 +326,7 @@ inline void coulomb_transform() {
 			assert(l_pos > -1);
 			Momentum replacement = Momentum('x') - third_momentum + Momentum(third_momentum.momentum_list[q_pos]) + Momentum(third_momentum.momentum_list[l_pos]);
 			if(third_momentum.momentum_list[q_pos].first  < 0) {
-				replacement.flipMomentum();
+				replacement.flip_momentum();
 			}
 			term.transform_momentum_sum(third_momentum.momentum_list[q_pos].second, replacement, 'x');
 			term.rename_momenta('x', 'q');
@@ -374,7 +374,7 @@ inline void coulomb_transform() {
 		// The first coefficient is always A or B
 		const Coefficient& term_coeff = second_commutation_result[i].coefficients[0];
 		assert(term_coeff.name == "A" || term_coeff.name == "B");
-		M_lambdas[i].translational_invariance = false;
+		M_lambdas[i].inversion_symmetry = false;
 		M_lambdas[i].momenta.resize(2);
 		if (term_coeff.name == "A") {
 			M_lambdas[i].momenta[0] = term_coeff.momenta[0];
