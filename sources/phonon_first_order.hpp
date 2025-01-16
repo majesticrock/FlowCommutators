@@ -158,7 +158,7 @@ inline void phonon_first_order() {
 				for (int i = 2; i < 4; ++i) {
 					Operator const * target_op = &term.operators[i];
 					if (target_op->momentum.size() == 1U) continue;
-					momentum_symbol const& target_mom = (target_op->momentum[0].name == good ? target_op->momentum[1] : target_op->momentum[0]);
+					MomentumSymbol const& target_mom = (target_op->momentum[0].name == good ? target_op->momentum[1] : target_op->momentum[0]);
 					const MomentumSymbol::name_type target = target_mom.name;
 					if (target_mom.factor < 0) {
 						term.invert_momentum_sum(target);

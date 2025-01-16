@@ -12,19 +12,19 @@ inline void phonon_higher_order() {
 			SumContainer{ MomentumSum({ 'K', 'L', 'P', 'Q' }), IndexSum({ Index::GeneralSpin_S, Index::GeneralSpin_SPrime }) },
 			std::vector<Operator>({
 				Operator::Boson(Momentum('P', -1), true),
-				Operator(MomentumSymbols({ MomentumSymbol(1, 'K'), MomentumSymbol(1, 'P')}), Index::GeneralSpin_S, true),
+				Operator(momentum_symbols({ MomentumSymbol(1, 'K'), MomentumSymbol(1, 'P')}), Index::GeneralSpin_S, true),
 				Operator('L', 1, false, Index::GeneralSpin_SPrime, true),
-				Operator(MomentumSymbols({ MomentumSymbol(1, 'L'), MomentumSymbol(-1, 'Q') }), Index::GeneralSpin_SPrime, false),
-				Operator(MomentumSymbols({ MomentumSymbol(1, 'K'), MomentumSymbol(1, 'Q') }), Index::GeneralSpin_S, false),
+				Operator(momentum_symbols({ MomentumSymbol(1, 'L'), MomentumSymbol(-1, 'Q') }), Index::GeneralSpin_SPrime, false),
+				Operator(momentum_symbols({ MomentumSymbol(1, 'K'), MomentumSymbol(1, 'Q') }), Index::GeneralSpin_S, false),
 			})),
 		Term(-1, Coefficient("B_2", MomentumList({ 'K', 'L', 'P', 'Q' }), IndexWrapper{}, false, false),
 			SumContainer{ MomentumSum({ 'K', 'L', 'P', 'Q' }), IndexSum({ Index::GeneralSpin_S, Index::GeneralSpin_SPrime }) },
 			std::vector<Operator>({
 				Operator::Boson(Momentum('P', 1), false),
-				Operator(MomentumSymbols({ MomentumSymbol(1, 'K'), MomentumSymbol(1, 'P')}), Index::GeneralSpin_S, true),
+				Operator(momentum_symbols({ MomentumSymbol(1, 'K'), MomentumSymbol(1, 'P')}), Index::GeneralSpin_S, true),
 				Operator('L', 1, false, Index::GeneralSpin_SPrime, true),
-				Operator(MomentumSymbols({ MomentumSymbol(1, 'L'), MomentumSymbol(-1, 'Q') }), Index::GeneralSpin_SPrime, false),
-				Operator(MomentumSymbols({ MomentumSymbol(1, 'K'), MomentumSymbol(1, 'Q') }), Index::GeneralSpin_S, false),
+				Operator(momentum_symbols({ MomentumSymbol(1, 'L'), MomentumSymbol(-1, 'Q') }), Index::GeneralSpin_SPrime, false),
+				Operator(momentum_symbols({ MomentumSymbol(1, 'K'), MomentumSymbol(1, 'Q') }), Index::GeneralSpin_S, false),
 			}))
 		});
 	const std::vector<Term> H_original({
@@ -47,14 +47,14 @@ inline void phonon_higher_order() {
 			SumContainer{ MomentumSum({ 'k', 'q' }), IndexSum(Index::Sigma) },
 			std::vector<Operator>({
 				Operator::Boson(Momentum('q', -1), true),
-				Operator(MomentumSymbols({ MomentumSymbol(1, 'k'), MomentumSymbol(1, 'q') }), Index::Sigma, true),
+				Operator(momentum_symbols({ MomentumSymbol(1, 'k'), MomentumSymbol(1, 'q') }), Index::Sigma, true),
 				Operator('k', 1, false, Index::Sigma, false)
 			})),
 		Term(-1,Coefficient("M", MomentumList({ 'k', 'q' }), IndexWrapper{}, false, false, true),
 			SumContainer{ MomentumSum({ 'k', 'q' }), IndexSum(Index::Sigma) },
 			std::vector<Operator>({
 				Operator::Boson(Momentum('q'), false),
-				Operator(MomentumSymbols({ MomentumSymbol(1, 'k'), MomentumSymbol(1, 'q') }), Index::Sigma, true),
+				Operator(momentum_symbols({ MomentumSymbol(1, 'k'), MomentumSymbol(1, 'q') }), Index::Sigma, true),
 				Operator('k', 1, false, Index::Sigma, false)
 			})),
 		// el-el interaction
@@ -63,8 +63,8 @@ inline void phonon_higher_order() {
 			std::vector<Operator>({
 				Operator('k', 1, false, Index::Sigma, true),
 				Operator('l', 1, false, Index::SigmaPrime, true),
-				Operator(MomentumSymbols({ MomentumSymbol(1, 'l'), MomentumSymbol(-1, 'q') }), Index::SigmaPrime, false),
-				Operator(MomentumSymbols({ MomentumSymbol(1, 'k'), MomentumSymbol(1, 'q') }), Index::Sigma, false),
+				Operator(momentum_symbols({ MomentumSymbol(1, 'l'), MomentumSymbol(-1, 'q') }), Index::SigmaPrime, false),
+				Operator(momentum_symbols({ MomentumSymbol(1, 'k'), MomentumSymbol(1, 'q') }), Index::Sigma, false),
 			}))
 		});
 

@@ -39,10 +39,6 @@ endif()
 find_package(Boost REQUIRED COMPONENTS serialization)
 target_include_directories(FlowCommutators PRIVATE ${Boost_INCLUDE_DIRS})
 
-find_package(symbolic_operators REQUIRED)
-target_include_directories(FlowCommutators PRIVATE ${symbolic_operators_INCLUDE_DIRS})
-target_link_libraries(FlowCommutators PRIVATE mrock::symbolic_operators::symbolic_operators)
-
-find_package(utility REQUIRED)
-target_include_directories(FlowCommutators PRIVATE ${utility_INCLUDE_DIRS})
-target_link_libraries(FlowCommutators PRIVATE mrock::utility::utility)
+find_package(mrock REQUIRED)
+target_include_directories(FlowCommutators PUBLIC ${mrock_INCLUDE_DIRS})
+target_link_libraries(FlowCommutators PUBLIC ${mrock_LIBRARIES})
