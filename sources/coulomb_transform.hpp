@@ -65,8 +65,8 @@ inline void coulomb_transform() {
 		std::vector<Operator>({
 			Operator('k', 1, false, Index::Sigma, true),
 			Operator('l', 1, false, Index::SigmaPrime, true),
-			Operator(momentum_pairs({ std::make_pair(1, 'l'), std::make_pair(-1, 'q') }), Index::SigmaPrime, false),
-			Operator(momentum_pairs({ std::make_pair(1, 'k'), std::make_pair(1, 'q') }), Index::Sigma, false),
+			Operator(momentum_symbols({ MomentumSymbol(1, 'l'), MomentumSymbol(-1, 'q') }), Index::SigmaPrime, false),
+			Operator(momentum_symbols({ MomentumSymbol(1, 'k'), MomentumSymbol(1, 'q') }), Index::Sigma, false),
 		}));
 	const Term H_C_mixed(IntFractional(1, 4), 
 		Coefficient("V", MomentumList({ Momentum('l'), Momentum('k'), Momentum('q', -1) }), IndexWrapper{}, false, false),
@@ -74,8 +74,8 @@ inline void coulomb_transform() {
 		std::vector<Operator>({
 			Operator('k', 1, false, Index::Sigma, true),
 			Operator('l', 1, false, Index::SigmaPrime, true),
-			Operator(momentum_pairs({ std::make_pair(1, 'l'), std::make_pair(-1, 'q') }), Index::SigmaPrime, false),
-			Operator(momentum_pairs({ std::make_pair(1, 'k'), std::make_pair(1, 'q') }), Index::Sigma, false),
+			Operator(momentum_symbols({ MomentumSymbol(1, 'l'), MomentumSymbol(-1, 'q') }), Index::SigmaPrime, false),
+			Operator(momentum_symbols({ MomentumSymbol(1, 'k'), MomentumSymbol(1, 'q') }), Index::Sigma, false),
 		}));
 	const std::vector<Term> H_sym{H_C, H_C_mixed};
 	
@@ -84,7 +84,7 @@ inline void coulomb_transform() {
 		SumContainer{ MomentumSum({ 'P', 'Q' }), IndexSum(Index::GeneralSpin_S) },
 		std::vector<Operator>({
 			Operator::Boson(Momentum('Q', -1), true),
-			Operator(momentum_pairs({ std::make_pair(1, 'P'), std::make_pair(1, 'Q') }), Index::GeneralSpin_S, true),
+			Operator(momentum_symbols({ MomentumSymbol(1, 'P'), MomentumSymbol(1, 'Q') }), Index::GeneralSpin_S, true),
 			Operator('P', 1, false, Index::GeneralSpin_S, false)
 		}));
 	const Term CUT_eta_annihilation(-1, 
@@ -93,7 +93,7 @@ inline void coulomb_transform() {
 		SumContainer{ MomentumSum({ 'P', 'Q' }), IndexSum( Index::GeneralSpin_S ) },
 		std::vector<Operator>({
 			 Operator::Boson(Momentum('Q'), false),
-			 Operator(momentum_pairs({ std::make_pair(1, 'P'), std::make_pair(1, 'Q') }), Index::GeneralSpin_S, true),
+			 Operator(momentum_symbols({ MomentumSymbol(1, 'P'), MomentumSymbol(1, 'Q') }), Index::GeneralSpin_S, true),
 			 Operator('P', 1, false, Index::GeneralSpin_S, false)
 		 }));
 	
@@ -126,13 +126,13 @@ inline void coulomb_transform() {
 		if (term.operators[3].momentum.momentum_list.size() == 3U) {
 			Momentum& base = term.operators[3].momentum;
 			Momentum replacement = Momentum('x') + Momentum('p');
-			term.transform_momentum_sum(base.momentum_list[0].second, replacement, 'x');
+			term.transform_momentum_sum(base.momentum_list[0].name, replacement, 'x');
 			term.rename_momenta('x', 'l');
 		}
 		else if (term.operators[4].momentum.momentum_list.size() == 3U) {
 			Momentum& base = term.operators[4].momentum;
 			Momentum replacement = Momentum('x') + Momentum('p');
-			term.transform_momentum_sum(base.momentum_list[0].second, replacement, 'x');
+			term.transform_momentum_sum(base.momentum_list[0].name, replacement, 'x');
 			term.rename_momenta('x', 'k');
 		}
 		// We may have terms like c_k^+ c_l+p^+ ... instead of c_k+p^+ c_l^+ ...
@@ -164,7 +164,7 @@ inline void coulomb_transform() {
 			//Coefficient& coulomb = term.coefficients[1];
 			//assert(coulomb.name == "V");
 			//assert(coulomb.momenta.back().momentum_list.size() == 1);
-			//coulomb.momenta.back().momentum_list[0].first = std::abs(coulomb.momenta.back().momentum_list[0].first);
+			//coulomb.momenta.back().momentum_list[0].factor = std::abs(coulomb.momenta.back().momentum_list[0].factor);
 		}
 		// Sort the sum indizes to be identical
 		std::sort(term.sums.momenta.begin(), term.sums.momenta.end());
@@ -201,10 +201,10 @@ inline void coulomb_transform() {
 			SumContainer{ MomentumSum({ 'k', 'l', 'p', 'q' }), IndexSum({ Index::Sigma, Index::SigmaPrime }) },
 			std::vector<Operator>({
 				Operator::Boson(Momentum('p', -1), true),
-				Operator(momentum_pairs({ std::make_pair(1, 'k'), std::make_pair(1, 'p')}), Index::Sigma, true),
+				Operator(momentum_symbols({ MomentumSymbol(1, 'k'), MomentumSymbol(1, 'p')}), Index::Sigma, true),
 				Operator('l', 1, false, Index::SigmaPrime, true),
-				Operator(momentum_pairs({ std::make_pair(1, 'l'), std::make_pair(-1, 'q') }), Index::SigmaPrime, false),
-				Operator(momentum_pairs({ std::make_pair(1, 'k'), std::make_pair(1, 'q') }), Index::Sigma, false),
+				Operator(momentum_symbols({ MomentumSymbol(1, 'l'), MomentumSymbol(-1, 'q') }), Index::SigmaPrime, false),
+				Operator(momentum_symbols({ MomentumSymbol(1, 'k'), MomentumSymbol(1, 'q') }), Index::Sigma, false),
 			})),
 			Term(1, 
 			Coefficient("C_2", MomentumList({ 'k', 'l', 'p', 'q' }), IndexWrapper{}, false, false),
@@ -212,10 +212,10 @@ inline void coulomb_transform() {
 			SumContainer{ MomentumSum({ 'k', 'l', 'p', 'q' }), IndexSum({ Index::Sigma, Index::SigmaPrime }) },
 			std::vector<Operator>({
 				Operator::Boson(Momentum('p', 1), false),
-				Operator(momentum_pairs({ std::make_pair(1, 'k'), std::make_pair(1, 'p')}), Index::Sigma, true),
+				Operator(momentum_symbols({ MomentumSymbol(1, 'k'), MomentumSymbol(1, 'p')}), Index::Sigma, true),
 				Operator('l', 1, false, Index::SigmaPrime, true),
-				Operator(momentum_pairs({ std::make_pair(1, 'l'), std::make_pair(-1, 'q') }), Index::SigmaPrime, false),
-				Operator(momentum_pairs({ std::make_pair(1, 'k'), std::make_pair(1, 'q') }), Index::Sigma, false),
+				Operator(momentum_symbols({ MomentumSymbol(1, 'l'), MomentumSymbol(-1, 'q') }), Index::SigmaPrime, false),
+				Operator(momentum_symbols({ MomentumSymbol(1, 'k'), MomentumSymbol(1, 'q') }), Index::Sigma, false),
 			})),
 		});
 
@@ -294,7 +294,7 @@ inline void coulomb_transform() {
 			Momentum& first_momentum = term.operators[0].momentum;
 			if (first_momentum != Momentum('k')) {
 				if (first_momentum.momentum_list.size() == 1U) {
-					const char original = first_momentum.momentum_list[0].second;
+					const MomentumSymbol::name_type original = first_momentum.momentum_list[0].name;
 					term.rename_momenta(original, 'x');
 					term.rename_momenta('k', original);
 					term.rename_momenta('x', 'k');
@@ -303,7 +303,7 @@ inline void coulomb_transform() {
 					int k_pos = first_momentum.isUsed('k');
 					assert(k_pos > -1);
 					Momentum replacement = Momentum('x') - first_momentum + Momentum(first_momentum.momentum_list[k_pos]);
-					term.transform_momentum_sum(first_momentum.momentum_list[k_pos].second, replacement, 'x');
+					term.transform_momentum_sum(first_momentum.momentum_list[k_pos].name, replacement, 'x');
 					term.rename_momenta('x', 'k');
 				}
 			}
@@ -314,7 +314,7 @@ inline void coulomb_transform() {
 				int l_pos = second_momentum.isUsed('l');
 				assert(l_pos > -1);
 				Momentum replacement = Momentum('x') - second_momentum + Momentum(second_momentum.momentum_list[l_pos]);
-				term.transform_momentum_sum(second_momentum.momentum_list[l_pos].second, replacement, 'x');
+				term.transform_momentum_sum(second_momentum.momentum_list[l_pos].name, replacement, 'x');
 				term.rename_momenta('x', 'l');
 			}
 		}
@@ -325,15 +325,15 @@ inline void coulomb_transform() {
 			int l_pos = third_momentum.isUsed('l');
 			assert(l_pos > -1);
 			Momentum replacement = Momentum('x') - third_momentum + Momentum(third_momentum.momentum_list[q_pos]) + Momentum(third_momentum.momentum_list[l_pos]);
-			if(third_momentum.momentum_list[q_pos].first  < 0) {
+			if(third_momentum.momentum_list[q_pos].factor  < 0) {
 				replacement.flip_momentum();
 			}
-			term.transform_momentum_sum(third_momentum.momentum_list[q_pos].second, replacement, 'x');
+			term.transform_momentum_sum(third_momentum.momentum_list[q_pos].name, replacement, 'x');
 			term.rename_momenta('x', 'q');
 
 			q_pos = third_momentum.isUsed('q');
 			assert(q_pos == 1);
-			if (third_momentum.momentum_list[q_pos].first > 0) {
+			if (third_momentum.momentum_list[q_pos].factor > 0) {
 				term.invert_momentum_sum('q');
 			}
 		}

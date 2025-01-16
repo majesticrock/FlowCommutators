@@ -16,7 +16,7 @@ inline void phonon_first_order() {
 			SumContainer{ MomentumSum({ 'P', 'Q' }), IndexSum(Index::GeneralSpin_S) },
 			std::vector<Operator>({
 				Operator::Boson(Momentum('Q', -1), true),
-				Operator(momentum_pairs({ std::make_pair(1, 'P'), std::make_pair(1, 'Q') }), Index::GeneralSpin_S, true),
+				Operator(momentum_symbols({ MomentumSymbol(1, 'P'), MomentumSymbol(1, 'Q') }), Index::GeneralSpin_S, true),
 				Operator('P', 1, false, Index::GeneralSpin_S, false)
 			})),
 		Term(1,
@@ -27,7 +27,7 @@ inline void phonon_first_order() {
 			SumContainer{ MomentumSum({ 'P', 'Q' }), IndexSum(Index::GeneralSpin_S) },
 			std::vector<Operator>({
 				 Operator::Boson(Momentum('Q'), false),
-				 Operator(momentum_pairs({ std::make_pair(1, 'P'), std::make_pair(1, 'Q') }), Index::GeneralSpin_S, true),
+				 Operator(momentum_symbols({ MomentumSymbol(1, 'P'), MomentumSymbol(1, 'Q') }), Index::GeneralSpin_S, true),
 				 Operator('P', 1, false, Index::GeneralSpin_S, false)
 			}))
 	    });
@@ -52,14 +52,14 @@ inline void phonon_first_order() {
 			SumContainer{ MomentumSum({ 'k', 'q' }), IndexSum(Index::Sigma) },
 			std::vector<Operator>({
 				Operator::Boson(Momentum('q', -1), true),
-				Operator(momentum_pairs({ std::make_pair(1, 'k'), std::make_pair(1, 'q') }), Index::Sigma, true),
+				Operator(momentum_symbols({ MomentumSymbol(1, 'k'), MomentumSymbol(1, 'q') }), Index::Sigma, true),
 				Operator('k', 1, false, Index::Sigma, false)
 			})),
 		Term(1, Coefficient("M", MomentumList({ Momentum("k+q"), Momentum('q', -1) }), IndexWrapper{}, false, false, true),
 			SumContainer{ MomentumSum({ 'k', 'q' }), IndexSum(Index::Sigma) },
 			std::vector<Operator>({
 				Operator::Boson(Momentum('q'), false),
-				Operator(momentum_pairs({ std::make_pair(1, 'k'), std::make_pair(1, 'q') }), Index::Sigma, true),
+				Operator(momentum_symbols({ MomentumSymbol(1, 'k'), MomentumSymbol(1, 'q') }), Index::Sigma, true),
 				Operator('k', 1, false, Index::Sigma, false)
 			})),
 		// el-el interaction
@@ -68,8 +68,8 @@ inline void phonon_first_order() {
 		//	std::vector<Operator>({
 		//		Operator('k', 1, false, Index::Sigma, true),
 		//		Operator('l', 1, false, Index::SigmaPrime, true),
-		//		Operator(momentum_pairs({ std::make_pair(1, 'l'), std::make_pair(-1, 'q') }), Index::SigmaPrime, false),
-		//		Operator(momentum_pairs({ std::make_pair(1, 'k'), std::make_pair(1, 'q') }), Index::Sigma, false),
+		//		Operator(momentum_symbols({ MomentumSymbol(1, 'l'), MomentumSymbol(-1, 'q') }), Index::SigmaPrime, false),
+		//		Operator(momentum_symbols({ MomentumSymbol(1, 'k'), MomentumSymbol(1, 'q') }), Index::Sigma, false),
 		//	}))
 		});
 
@@ -92,8 +92,8 @@ inline void phonon_first_order() {
 		if (term.operators.size() == 2U) {
 			Operator const * target_op = &term.operators.front();
 			if (target_op->momentum.size() > 1U) {
-				const char target = target_op->momentum.back().second;
-				if (target_op->momentum.back().first < 0) {
+				const MomentumSymbol::name_type target = target_op->momentum.back().name;
+				if (target_op->momentum.back().factor < 0) {
 					term.invert_momentum_sum(target);
 				}
 				term.transform_momentum_sum(target,
@@ -101,7 +101,7 @@ inline void phonon_first_order() {
 				term.rename_momenta('x', target);
 			}
 
-			if (term.operators.front().momentum.front().second == 'q') {
+			if (term.operators.front().momentum.front().name == 'q') {
 				term.swap_momenta('q', 'p');
 			}
 		}
@@ -109,25 +109,25 @@ inline void phonon_first_order() {
 		if (term.operators.size() == 3U) {
 			Operator const * target_op = &term.operators.front();
 			assert(!target_op->is_fermion);
-			if (target_op->is_daggered && target_op->momentum.front().first > 0) {
-				term.invert_momentum_sum(target_op->momentum.front().second);
+			if (target_op->is_daggered && target_op->momentum.front().factor > 0) {
+				term.invert_momentum_sum(target_op->momentum.front().name);
 			}
-			if (!target_op->is_daggered && target_op->momentum.front().first < 0) {
-				term.invert_momentum_sum(target_op->momentum.front().second);
+			if (!target_op->is_daggered && target_op->momentum.front().factor < 0) {
+				term.invert_momentum_sum(target_op->momentum.front().name);
 			}
 
 			target_op = &term.operators.back();
 			if (target_op->momentum.size() > 1U) {
-				char target;
-				if (target_op->momentum.back().second == term.operators.front().momentum.front().second) {
-					target = target_op->momentum.front().second;
-					if (target_op->momentum.front().first < 0) {
+				MomentumSymbol::name_type target;
+				if (target_op->momentum.back().name == term.operators.front().momentum.front().name) {
+					target = target_op->momentum.front().name;
+					if (target_op->momentum.front().factor < 0) {
 						term.invert_momentum_sum(target);
 					}
 				} 
 				else {
-					target = target_op->momentum.back().second;
-					if (target_op->momentum.back().first < 0) {
+					target = target_op->momentum.back().name;
+					if (target_op->momentum.back().factor < 0) {
 						term.invert_momentum_sum(target);
 					}
 				}
@@ -137,30 +137,30 @@ inline void phonon_first_order() {
 				term.rename_momenta('x', target);
 			}
 
-			if (term.operators.front().momentum.front().second != 'q') {
+			if (term.operators.front().momentum.front().name != 'q') {
 				term.swap_momenta('p', 'q');
 			}
 		}
 
 		if (term.operators.size() == 4U) {
 			if (term.count_fermions() == 2) {
-				char good = '0';
+				MomentumSymbol::name_type good = '0';
 				if (term.operators[2].momentum.size() == 1U) {
-					good = term.operators[2].momentum.front().second;
+					good = term.operators[2].momentum.front().name;
 					if (term.operators[3].momentum.size() == 1U) {
 						continue;
 					}				
 				}
 				if (term.operators[3].momentum.size() == 1U) {
-					good = term.operators[3].momentum.front().second;
+					good = term.operators[3].momentum.front().name;
 				}
 
 				for (int i = 2; i < 4; ++i) {
 					Operator const * target_op = &term.operators[i];
 					if (target_op->momentum.size() == 1U) continue;
-					momentum_pair const& target_mom = (target_op->momentum[0].second == good ? target_op->momentum[1] : target_op->momentum[0]);
-					const char target = target_mom.second;
-					if (target_mom.first < 0) {
+					momentum_symbol const& target_mom = (target_op->momentum[0].name == good ? target_op->momentum[1] : target_op->momentum[0]);
+					const MomentumSymbol::name_type target = target_mom.name;
+					if (target_mom.factor < 0) {
 						term.invert_momentum_sum(target);
 					}
 

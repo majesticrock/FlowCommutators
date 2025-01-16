@@ -12,19 +12,19 @@ inline void phonon_higher_order() {
 			SumContainer{ MomentumSum({ 'K', 'L', 'P', 'Q' }), IndexSum({ Index::GeneralSpin_S, Index::GeneralSpin_SPrime }) },
 			std::vector<Operator>({
 				Operator::Boson(Momentum('P', -1), true),
-				Operator(momentum_pairs({ std::make_pair(1, 'K'), std::make_pair(1, 'P')}), Index::GeneralSpin_S, true),
+				Operator(MomentumSymbols({ MomentumSymbol(1, 'K'), MomentumSymbol(1, 'P')}), Index::GeneralSpin_S, true),
 				Operator('L', 1, false, Index::GeneralSpin_SPrime, true),
-				Operator(momentum_pairs({ std::make_pair(1, 'L'), std::make_pair(-1, 'Q') }), Index::GeneralSpin_SPrime, false),
-				Operator(momentum_pairs({ std::make_pair(1, 'K'), std::make_pair(1, 'Q') }), Index::GeneralSpin_S, false),
+				Operator(MomentumSymbols({ MomentumSymbol(1, 'L'), MomentumSymbol(-1, 'Q') }), Index::GeneralSpin_SPrime, false),
+				Operator(MomentumSymbols({ MomentumSymbol(1, 'K'), MomentumSymbol(1, 'Q') }), Index::GeneralSpin_S, false),
 			})),
 		Term(-1, Coefficient("B_2", MomentumList({ 'K', 'L', 'P', 'Q' }), IndexWrapper{}, false, false),
 			SumContainer{ MomentumSum({ 'K', 'L', 'P', 'Q' }), IndexSum({ Index::GeneralSpin_S, Index::GeneralSpin_SPrime }) },
 			std::vector<Operator>({
 				Operator::Boson(Momentum('P', 1), false),
-				Operator(momentum_pairs({ std::make_pair(1, 'K'), std::make_pair(1, 'P')}), Index::GeneralSpin_S, true),
+				Operator(MomentumSymbols({ MomentumSymbol(1, 'K'), MomentumSymbol(1, 'P')}), Index::GeneralSpin_S, true),
 				Operator('L', 1, false, Index::GeneralSpin_SPrime, true),
-				Operator(momentum_pairs({ std::make_pair(1, 'L'), std::make_pair(-1, 'Q') }), Index::GeneralSpin_SPrime, false),
-				Operator(momentum_pairs({ std::make_pair(1, 'K'), std::make_pair(1, 'Q') }), Index::GeneralSpin_S, false),
+				Operator(MomentumSymbols({ MomentumSymbol(1, 'L'), MomentumSymbol(-1, 'Q') }), Index::GeneralSpin_SPrime, false),
+				Operator(MomentumSymbols({ MomentumSymbol(1, 'K'), MomentumSymbol(1, 'Q') }), Index::GeneralSpin_S, false),
 			}))
 		});
 	const std::vector<Term> H_original({
@@ -47,14 +47,14 @@ inline void phonon_higher_order() {
 			SumContainer{ MomentumSum({ 'k', 'q' }), IndexSum(Index::Sigma) },
 			std::vector<Operator>({
 				Operator::Boson(Momentum('q', -1), true),
-				Operator(momentum_pairs({ std::make_pair(1, 'k'), std::make_pair(1, 'q') }), Index::Sigma, true),
+				Operator(MomentumSymbols({ MomentumSymbol(1, 'k'), MomentumSymbol(1, 'q') }), Index::Sigma, true),
 				Operator('k', 1, false, Index::Sigma, false)
 			})),
 		Term(-1,Coefficient("M", MomentumList({ 'k', 'q' }), IndexWrapper{}, false, false, true),
 			SumContainer{ MomentumSum({ 'k', 'q' }), IndexSum(Index::Sigma) },
 			std::vector<Operator>({
 				Operator::Boson(Momentum('q'), false),
-				Operator(momentum_pairs({ std::make_pair(1, 'k'), std::make_pair(1, 'q') }), Index::Sigma, true),
+				Operator(MomentumSymbols({ MomentumSymbol(1, 'k'), MomentumSymbol(1, 'q') }), Index::Sigma, true),
 				Operator('k', 1, false, Index::Sigma, false)
 			})),
 		// el-el interaction
@@ -63,8 +63,8 @@ inline void phonon_higher_order() {
 			std::vector<Operator>({
 				Operator('k', 1, false, Index::Sigma, true),
 				Operator('l', 1, false, Index::SigmaPrime, true),
-				Operator(momentum_pairs({ std::make_pair(1, 'l'), std::make_pair(-1, 'q') }), Index::SigmaPrime, false),
-				Operator(momentum_pairs({ std::make_pair(1, 'k'), std::make_pair(1, 'q') }), Index::Sigma, false),
+				Operator(MomentumSymbols({ MomentumSymbol(1, 'l'), MomentumSymbol(-1, 'q') }), Index::SigmaPrime, false),
+				Operator(MomentumSymbols({ MomentumSymbol(1, 'k'), MomentumSymbol(1, 'q') }), Index::Sigma, false),
 			}))
 		});
 
@@ -87,11 +87,11 @@ inline void phonon_higher_order() {
 			if(term.operators.front().momentum.size() > 1U) {
 				throw std::runtime_error("Expected the phonon to have only one momentum!");
 			}
-			const char current = term.operators.front().momentum.front().second;
+			const MomentumSymbol::name_type current = term.operators.front().momentum.front().name;
 			if (current != 'p') {
 				term.swap_momenta('p', current);
 			}
-			if ((term.operators.front().momentum.front().first > 0) == term.operators.front().is_daggered) {
+			if ((term.operators.front().momentum.front().factor > 0) == term.operators.front().is_daggered) {
 				term.invert_momentum_sum('p');
 			}
 
@@ -99,30 +99,30 @@ inline void phonon_higher_order() {
 			// first fermion c_{k+p}^+
 			Momentum* current_momentum = &(term.operators[1].momentum);
 			if (current_momentum->size() != 2U) {
-				const momentum_pair select = (current_momentum->front().second != 'p' 
+				const MomentumSymbol select = (current_momentum->front().name != 'p' 
 					? current_momentum->front() : (*current_momentum)[1]);
-				if(select.first < 0) {
-					term.invert_momentum_sum(select.second);
+				if(select.factor < 0) {
+					term.invert_momentum_sum(select.name);
 				}
-				const Momentum replacement = Momentum('k') - ((*current_momentum) - Momentum(select.second)) + Momentum('p');
-				term.transform_momentum_sum(select.second, replacement, 'k');
+				const Momentum replacement = Momentum('k') - ((*current_momentum) - Momentum(select.name)) + Momentum('p');
+				term.transform_momentum_sum(select.name, replacement, 'k');
 			}
 			else {
-				if ((*current_momentum)[0].second == 'p' || (*current_momentum)[1].second == 'k') {
+				if ((*current_momentum)[0].name == 'p' || (*current_momentum)[1].name == 'k') {
 					std::swap((*current_momentum)[0], (*current_momentum)[1]);
 				}
-				if ((*current_momentum)[1].second != 'p') {
-					term.rename_momenta((*current_momentum)[0].second, '*');
-					if ((*current_momentum)[0].first < 0) {
+				if ((*current_momentum)[1].name != 'p') {
+					term.rename_momenta((*current_momentum)[0].name, '*');
+					if ((*current_momentum)[0].factor < 0) {
 						term.invert_momentum_sum('*');
 					}
-					const momentum_pair select = (*current_momentum)[0];
+					const MomentumSymbol select = (*current_momentum)[0];
 					const Momentum replacement = Momentum('k') + Momentum('p') - Momentum((*current_momentum)[1]);
-					term.transform_momentum_sum(select.second, replacement, 'k');
+					term.transform_momentum_sum(select.name, replacement, 'k');
 				}
 				else {
-					term.rename_momenta((*current_momentum)[0].second, 'k');
-					if((*current_momentum)[0].first < 0) {
+					term.rename_momenta((*current_momentum)[0].name, 'k');
+					if((*current_momentum)[0].factor < 0) {
 						term.invert_momentum_sum('k');
 					}
 				}
@@ -131,34 +131,34 @@ inline void phonon_higher_order() {
 			// second fermion c_l^+
 			current_momentum = &(term.operators[2].momentum);
 			if (current_momentum->size() != 1U) {
-				const momentum_pair select = *std::find_if_not(current_momentum->begin(), current_momentum->end(), 
-					[](const momentum_pair& _pair) {
-						return (_pair.second == 'p' || _pair.second == 'k');
+				const MomentumSymbol select = *std::find_if_not(current_momentum->begin(), current_momentum->end(), 
+					[](const MomentumSymbol& _pair) {
+						return (_pair.name == 'p' || _pair.name == 'k');
 					});
-				if (select.first < 0) {
-					term.invert_momentum_sum(select.second);
+				if (select.factor < 0) {
+					term.invert_momentum_sum(select.name);
 				}
-				const Momentum replacement = Momentum('l') - ((*current_momentum) - Momentum(select.second));
-				term.transform_momentum_sum(select.second, replacement, 'l');
+				const Momentum replacement = Momentum('l') - ((*current_momentum) - Momentum(select.name));
+				term.transform_momentum_sum(select.name, replacement, 'l');
 			}
 			else {
-				term.rename_momenta(current_momentum->front().second, 'l');
+				term.rename_momenta(current_momentum->front().name, 'l');
 			}
-			if((*current_momentum)[0].first < 0) {
+			if((*current_momentum)[0].factor < 0) {
 				term.invert_momentum_sum('l');
 			}
 
 			// third fermion c_{l-q}
 			current_momentum = &(term.operators[3].momentum);
-			const momentum_pair select = *std::find_if_not(current_momentum->begin(), current_momentum->end(), 
-				[](const momentum_pair& _pair) {
-					return (_pair.second == 'p' || _pair.second == 'k' || _pair.second == 'l');
+			const MomentumSymbol select = *std::find_if_not(current_momentum->begin(), current_momentum->end(), 
+				[](const MomentumSymbol& _pair) {
+					return (_pair.name == 'p' || _pair.name == 'k' || _pair.name == 'l');
 				});
-			if(select.first < 0) {
-				term.invert_momentum_sum(select.second);
+			if(select.factor < 0) {
+				term.invert_momentum_sum(select.name);
 			}
-			const Momentum replacement = Momentum('l') - Momentum('q') - ((*current_momentum) - Momentum(select.second));
-			term.transform_momentum_sum(select.second, replacement, 'q');
+			const Momentum replacement = Momentum('l') - Momentum('q') - ((*current_momentum) - Momentum(select.name));
+			term.transform_momentum_sum(select.name, replacement, 'q');
 			// fourth should be fixed automatically */
 
 			term.rename_indizes(term.operators[3].first_index(), Index::UndefinedIndex);
@@ -170,16 +170,16 @@ inline void phonon_higher_order() {
 			// first fermion c_k^+
 			Momentum* current_momentum = &(term.operators[0].momentum);
 			if (current_momentum->size() != 1U) {
-				const momentum_pair select = current_momentum->front();
-				if(select.first < 0) {
-					term.invert_momentum_sum(select.second);
+				const MomentumSymbol select = current_momentum->front();
+				if(select.factor < 0) {
+					term.invert_momentum_sum(select.name);
 				}
-				const Momentum replacement = Momentum('k') - ((*current_momentum) - Momentum(select.second));
-				term.transform_momentum_sum(select.second, replacement, 'k');
+				const Momentum replacement = Momentum('k') - ((*current_momentum) - Momentum(select.name));
+				term.transform_momentum_sum(select.name, replacement, 'k');
 			}
 			else {
-				term.rename_momenta((*current_momentum)[0].second, 'k');
-				if((*current_momentum)[0].first < 0) {
+				term.rename_momenta((*current_momentum)[0].name, 'k');
+				if((*current_momentum)[0].factor < 0) {
 					term.invert_momentum_sum('k');
 				}
 			}
@@ -187,19 +187,19 @@ inline void phonon_higher_order() {
 			// second fermion c_l^+
 			current_momentum = &(term.operators[1].momentum);
 			if (current_momentum->size() != 1U) {
-				const momentum_pair select = *std::find_if_not(current_momentum->begin(), current_momentum->end(), 
-					[](const momentum_pair& _pair) {
-						return (_pair.second == 'k');
+				const MomentumSymbol select = *std::find_if_not(current_momentum->begin(), current_momentum->end(), 
+					[](const MomentumSymbol& _pair) {
+						return (_pair.name == 'k');
 					});
-				if (select.first < 0) {
-					term.invert_momentum_sum(select.second);
+				if (select.factor < 0) {
+					term.invert_momentum_sum(select.name);
 				}
-				const Momentum replacement = Momentum('l') - ((*current_momentum) - Momentum(select.second));
-				term.transform_momentum_sum(select.second, replacement, 'l');
+				const Momentum replacement = Momentum('l') - ((*current_momentum) - Momentum(select.name));
+				term.transform_momentum_sum(select.name, replacement, 'l');
 			}
 			else {
-				term.rename_momenta(current_momentum->front().second, 'l');
-				if((*current_momentum)[0].first < 0) {
+				term.rename_momenta(current_momentum->front().name, 'l');
+				if((*current_momentum)[0].factor < 0) {
 					term.invert_momentum_sum('l');
 				}
 			}
@@ -207,15 +207,15 @@ inline void phonon_higher_order() {
 
 			// third fermion c_{l-q}
 			current_momentum = &(term.operators[2].momentum);
-			const momentum_pair select = *std::find_if_not(current_momentum->begin(), current_momentum->end(), 
-				[](const momentum_pair& _pair) {
-					return (_pair.second == 'k' || _pair.second == 'l');
+			const MomentumSymbol select = *std::find_if_not(current_momentum->begin(), current_momentum->end(), 
+				[](const MomentumSymbol& _pair) {
+					return (_pair.name == 'k' || _pair.name == 'l');
 				});
-			if(select.first < 0) {
-				term.invert_momentum_sum(select.second);
+			if(select.factor < 0) {
+				term.invert_momentum_sum(select.name);
 			}
-			const Momentum replacement = Momentum('l') - Momentum('q') - ((*current_momentum) - Momentum(select.second));
-			term.transform_momentum_sum(select.second, replacement, 'q');
+			const Momentum replacement = Momentum('l') - Momentum('q') - ((*current_momentum) - Momentum(select.name));
+			term.transform_momentum_sum(select.name, replacement, 'q');
 			// fourth should be fixed automatically */
 
 			term.rename_indizes(term.operators[2].first_index(), Index::UndefinedIndex);
