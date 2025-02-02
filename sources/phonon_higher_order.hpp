@@ -68,8 +68,7 @@ inline void phonon_higher_order() {
 			}))
 		});
 
-	std::vector<Term> commutation_result;
-	commutator(commutation_result, eta_prime, H_original);
+	std::vector<Term> commutation_result = commutator(eta_prime, H_original);
 	clean_up(commutation_result);
 
 	std::erase_if(commutation_result, [](const Term& term) -> bool {

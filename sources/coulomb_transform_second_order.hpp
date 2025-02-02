@@ -78,8 +78,7 @@ inline void coulomb_transform_second_order() {
 	std::cout << "where\n\\begin{align}\n\tA(P,Q) &= M_{P,Q} \\sgn ( \\epsilon_{P+Q} - \\epsilon_P + \\omega_{-Q} ) \\\\\n"
 		<< "\tB(P,Q) &= M_{P+Q,-Q}^* \\sgn ( \\epsilon_{P+Q} - \\epsilon_P - \\omega_Q )\n\\end{align}\n" << std::endl;
 
-	std::vector<Term> commutation_result;
-	commutator(commutation_result, CUT_eta, H_sym);
+	std::vector<Term> commutation_result = commutator(CUT_eta, H_sym);
 	clean_up(commutation_result);
 
 	std::erase_if(commutation_result, [](const Term& term) { return term.operators.size() > 6U; });
@@ -257,8 +256,7 @@ inline void coulomb_transform_second_order() {
 		<< H_prime
 		<< ", \\end{align*}" << std::endl;
 
-	std::vector<Term> second_commutation_result;
-	commutator(second_commutation_result, CUT_eta, H_prime);
+	std::vector<Term> second_commutation_result = commutator(CUT_eta, H_prime);
 	clean_up(second_commutation_result);
 	for (auto& term : second_commutation_result) {
 		term.rename_momenta('p', 'l');
@@ -289,7 +287,7 @@ inline void coulomb_transform_second_order() {
 					term.rename_momenta('x', 'k');
 				}
 				else {
-					int k_pos = first_momentum.isUsed('k');
+					int k_pos = first_momentum.is_used_at('k');
 					assert(k_pos > -1);
 					Momentum replacement = Momentum('x') - first_momentum + Momentum(first_momentum.momentum_list[k_pos]);
 					term.transform_momentum_sum(first_momentum.momentum_list[k_pos].name, replacement, 'x');
@@ -300,7 +298,7 @@ inline void coulomb_transform_second_order() {
 		{
 			Momentum& second_momentum = term.operators[1].momentum;
 			if (second_momentum != Momentum('l')) {
-				int l_pos = second_momentum.isUsed('l');
+				int l_pos = second_momentum.is_used_at('l');
 				assert(l_pos > -1);
 				Momentum replacement = Momentum('x') - second_momentum + Momentum(second_momentum.momentum_list[l_pos]);
 				term.transform_momentum_sum(second_momentum.momentum_list[l_pos].name, replacement, 'x');
@@ -309,9 +307,9 @@ inline void coulomb_transform_second_order() {
 		}
 		{
 			Momentum& third_momentum = term.operators[2].momentum;
-			int q_pos = third_momentum.isUsed('q');
+			int q_pos = third_momentum.is_used_at('q');
 			assert(q_pos > -1);
-			int l_pos = third_momentum.isUsed('l');
+			int l_pos = third_momentum.is_used_at('l');
 			assert(l_pos > -1);
 			Momentum replacement = Momentum('x') - third_momentum + Momentum(third_momentum.momentum_list[q_pos]) + Momentum(third_momentum.momentum_list[l_pos]);
 			if (third_momentum.momentum_list[q_pos].factor < 0) {
@@ -320,7 +318,7 @@ inline void coulomb_transform_second_order() {
 			term.transform_momentum_sum(third_momentum.momentum_list[q_pos].name, replacement, 'x');
 			term.rename_momenta('x', 'q');
 
-			q_pos = third_momentum.isUsed('q');
+			q_pos = third_momentum.is_used_at('q');
 			assert(q_pos == 1);
 			if (third_momentum.momentum_list[q_pos].factor > 0) {
 				term.invert_momentum_sum('q');

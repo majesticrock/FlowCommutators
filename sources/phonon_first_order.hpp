@@ -80,8 +80,7 @@ inline void phonon_first_order() {
 		<< CUT_eta
 		<< "\\end{align*}" << std::endl;
 
-    std::vector<Term> commutation_result;
-	commutator(commutation_result, CUT_eta, H_original);
+    std::vector<Term> commutation_result = commutator(CUT_eta, H_original);
 	clean_up(commutation_result);
 
 	for(auto& term : commutation_result) {
