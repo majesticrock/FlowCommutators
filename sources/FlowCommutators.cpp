@@ -1,12 +1,14 @@
 #include "coulomb_transform.hpp"
 #include "phonon_higher_order.hpp"
 #include "phonon_first_order.hpp"
+#include "commute_eta_eta.hpp"
 
 using namespace mrock::symbolic_operators;
 
 int main(int argc, char** argv) {
 	//phonon_first_order();
 	//phonon_higher_order();
-	coulomb_transform();
+	//coulomb_transform();
+	commute_eta_eta();
 	return 0;
 }
