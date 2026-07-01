@@ -15,7 +15,7 @@ inline void commute_eta_eta() {
 	    	SumContainer{ MomentumSum({ 'k', 'l' }), IndexSum(Index::Sigma) },
 	    	std::vector<Operator>({
 	    		Operator::Boson(Momentum('l', -1), true),
-	    		Operator(momentum_symbols({ MomentumSymbol(1, 'k'), MomentumSymbol(1, 'l') }), Index::Sigma, true),
+	    		Operator(std::vector<MomentumSymbol>({ MomentumSymbol(1, 'k'), MomentumSymbol(1, 'l') }), Index::Sigma, true),
 	    		Operator('k', 1, false, Index::Sigma, false)
 	    	})),
 	    Term(1,
@@ -26,7 +26,7 @@ inline void commute_eta_eta() {
 	    	SumContainer{ MomentumSum({ 'k', 'l' }), IndexSum(Index::Sigma) },
 	    	std::vector<Operator>({
 	    		 Operator::Boson(Momentum('l'), false),
-	    		 Operator(momentum_symbols({ MomentumSymbol(1, 'k'), MomentumSymbol(1, 'l') }), Index::Sigma, true),
+	    		 Operator(std::vector<MomentumSymbol>({ MomentumSymbol(1, 'k'), MomentumSymbol(1, 'l') }), Index::Sigma, true),
 	    		 Operator('k', 1, false, Index::Sigma, false)
 	    	}))
 	    });
@@ -40,7 +40,7 @@ inline void commute_eta_eta() {
             SumContainer{ MomentumSum({ 'p', 'q' }), IndexSum(Index::SigmaPrime) },
             std::vector<Operator>({
                 Operator::Boson(Momentum('q', -1), true),
-                Operator(momentum_symbols({ MomentumSymbol(1, 'p'), MomentumSymbol(1, 'q') }), Index::SigmaPrime, true),
+                Operator(std::vector<MomentumSymbol>({ MomentumSymbol(1, 'p'), MomentumSymbol(1, 'q') }), Index::SigmaPrime, true),
                 Operator('p', 1, false, Index::SigmaPrime, false)
             })),
         Term(1,
@@ -51,7 +51,7 @@ inline void commute_eta_eta() {
             SumContainer{ MomentumSum({ 'p', 'q' }), IndexSum(Index::SigmaPrime) },
             std::vector<Operator>({
                  Operator::Boson(Momentum('q'), false),
-                 Operator(momentum_symbols({ MomentumSymbol(1, 'p'), MomentumSymbol(1, 'q') }), Index::SigmaPrime, true),
+                 Operator(std::vector<MomentumSymbol>({ MomentumSymbol(1, 'p'), MomentumSymbol(1, 'q') }), Index::SigmaPrime, true),
                  Operator('p', 1, false, Index::SigmaPrime, false)
             }))
         });

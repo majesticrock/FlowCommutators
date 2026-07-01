@@ -65,8 +65,8 @@ inline void coulomb_transform() {
 		std::vector<Operator>({
 			Operator('k', 1, false, Index::Sigma, true),
 			Operator('l', 1, false, Index::SigmaPrime, true),
-			Operator(momentum_symbols({ MomentumSymbol(1, 'l'), MomentumSymbol(-1, 'q') }), Index::SigmaPrime, false),
-			Operator(momentum_symbols({ MomentumSymbol(1, 'k'), MomentumSymbol(1, 'q') }), Index::Sigma, false),
+			Operator(std::vector<MomentumSymbol>({ MomentumSymbol(1, 'l'), MomentumSymbol(-1, 'q') }), Index::SigmaPrime, false),
+			Operator(std::vector<MomentumSymbol>({ MomentumSymbol(1, 'k'), MomentumSymbol(1, 'q') }), Index::Sigma, false),
 		}));
 	const Term H_C_mixed(IntFractional(1, 4), 
 		Coefficient("V", MomentumList({ Momentum('l'), Momentum('k'), Momentum('q', -1) }), IndexWrapper{}, false, false),
@@ -74,8 +74,8 @@ inline void coulomb_transform() {
 		std::vector<Operator>({
 			Operator('k', 1, false, Index::Sigma, true),
 			Operator('l', 1, false, Index::SigmaPrime, true),
-			Operator(momentum_symbols({ MomentumSymbol(1, 'l'), MomentumSymbol(-1, 'q') }), Index::SigmaPrime, false),
-			Operator(momentum_symbols({ MomentumSymbol(1, 'k'), MomentumSymbol(1, 'q') }), Index::Sigma, false),
+			Operator(std::vector<MomentumSymbol>({ MomentumSymbol(1, 'l'), MomentumSymbol(-1, 'q') }), Index::SigmaPrime, false),
+			Operator(std::vector<MomentumSymbol>({ MomentumSymbol(1, 'k'), MomentumSymbol(1, 'q') }), Index::Sigma, false),
 		}));
 	const std::vector<Term> H_sym{H_C, H_C_mixed};
 	
@@ -84,7 +84,7 @@ inline void coulomb_transform() {
 		SumContainer{ MomentumSum({ 'P', 'Q' }), IndexSum(Index::GeneralSpin_S) },
 		std::vector<Operator>({
 			Operator::Boson(Momentum('Q', -1), true),
-			Operator(momentum_symbols({ MomentumSymbol(1, 'P'), MomentumSymbol(1, 'Q') }), Index::GeneralSpin_S, true),
+			Operator(std::vector<MomentumSymbol>({ MomentumSymbol(1, 'P'), MomentumSymbol(1, 'Q') }), Index::GeneralSpin_S, true),
 			Operator('P', 1, false, Index::GeneralSpin_S, false)
 		}));
 	const Term CUT_eta_annihilation(-1, 
@@ -93,7 +93,7 @@ inline void coulomb_transform() {
 		SumContainer{ MomentumSum({ 'P', 'Q' }), IndexSum( Index::GeneralSpin_S ) },
 		std::vector<Operator>({
 			 Operator::Boson(Momentum('Q'), false),
-			 Operator(momentum_symbols({ MomentumSymbol(1, 'P'), MomentumSymbol(1, 'Q') }), Index::GeneralSpin_S, true),
+			 Operator(std::vector<MomentumSymbol>({ MomentumSymbol(1, 'P'), MomentumSymbol(1, 'Q') }), Index::GeneralSpin_S, true),
 			 Operator('P', 1, false, Index::GeneralSpin_S, false)
 		 }));
 	
@@ -200,10 +200,10 @@ inline void coulomb_transform() {
 			SumContainer{ MomentumSum({ 'k', 'l', 'p', 'q' }), IndexSum({ Index::Sigma, Index::SigmaPrime }) },
 			std::vector<Operator>({
 				Operator::Boson(Momentum('p', -1), true),
-				Operator(momentum_symbols({ MomentumSymbol(1, 'k'), MomentumSymbol(1, 'p')}), Index::Sigma, true),
+				Operator(std::vector<MomentumSymbol>({ MomentumSymbol(1, 'k'), MomentumSymbol(1, 'p')}), Index::Sigma, true),
 				Operator('l', 1, false, Index::SigmaPrime, true),
-				Operator(momentum_symbols({ MomentumSymbol(1, 'l'), MomentumSymbol(-1, 'q') }), Index::SigmaPrime, false),
-				Operator(momentum_symbols({ MomentumSymbol(1, 'k'), MomentumSymbol(1, 'q') }), Index::Sigma, false),
+				Operator(std::vector<MomentumSymbol>({ MomentumSymbol(1, 'l'), MomentumSymbol(-1, 'q') }), Index::SigmaPrime, false),
+				Operator(std::vector<MomentumSymbol>({ MomentumSymbol(1, 'k'), MomentumSymbol(1, 'q') }), Index::Sigma, false),
 			})),
 			Term(1, 
 			Coefficient("C_2", MomentumList({ 'k', 'l', 'p', 'q' }), IndexWrapper{}, false, false),
@@ -211,10 +211,10 @@ inline void coulomb_transform() {
 			SumContainer{ MomentumSum({ 'k', 'l', 'p', 'q' }), IndexSum({ Index::Sigma, Index::SigmaPrime }) },
 			std::vector<Operator>({
 				Operator::Boson(Momentum('p', 1), false),
-				Operator(momentum_symbols({ MomentumSymbol(1, 'k'), MomentumSymbol(1, 'p')}), Index::Sigma, true),
+				Operator(std::vector<MomentumSymbol>({ MomentumSymbol(1, 'k'), MomentumSymbol(1, 'p')}), Index::Sigma, true),
 				Operator('l', 1, false, Index::SigmaPrime, true),
-				Operator(momentum_symbols({ MomentumSymbol(1, 'l'), MomentumSymbol(-1, 'q') }), Index::SigmaPrime, false),
-				Operator(momentum_symbols({ MomentumSymbol(1, 'k'), MomentumSymbol(1, 'q') }), Index::Sigma, false),
+				Operator(std::vector<MomentumSymbol>({ MomentumSymbol(1, 'l'), MomentumSymbol(-1, 'q') }), Index::SigmaPrime, false),
+				Operator(std::vector<MomentumSymbol>({ MomentumSymbol(1, 'k'), MomentumSymbol(1, 'q') }), Index::Sigma, false),
 			})),
 		});
 
