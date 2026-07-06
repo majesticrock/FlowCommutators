@@ -36,7 +36,6 @@ else()
     message(FATAL_ERROR "Unsupported compiler ${CMAKE_CXX_COMPILER_ID}. Only GCC is supported.")
 endif()
 
-find_package(Boost REQUIRED COMPONENTS serialization)
 target_include_directories(FlowCommutators PRIVATE ${Boost_INCLUDE_DIRS})
 
 find_package(mrock REQUIRED)
