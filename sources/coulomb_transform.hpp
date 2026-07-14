@@ -140,15 +140,32 @@ inline void coulomb_transform() {
 		// We perfom this action now
 		if (term.operators[2].momentum.momentum_list.size() == 2) {
 			// Starting at 1, because the boson does not have a spin
+			std::pair<Index, Index> occurring_indizes{Index::UndefinedIndex, Index::UndefinedIndex};
 			for (size_t i = 1U; i < term.operators.size(); ++i) {
-				if (term.operators[i].first_index() == Index::Sigma) {
-					term.operators[i].set_first_index(Index::SigmaPrime);
-				}
-				else if (term.operators[i].first_index() == Index::SigmaPrime) {
-					term.operators[i].set_first_index(Index::Sigma);
+				if (is_mutable(term.operators[i].first_index())) {
+					if (occurring_indizes.first == Index::UndefinedIndex) { 
+						occurring_indizes.first = term.operators[i].first_index();
+					}
+					else if (occurring_indizes.first != term.operators[i].first_index()) {
+						if (occurring_indizes.second == Index::UndefinedIndex) {
+							occurring_indizes.second = term.operators[i].first_index();
+						}
+						else if (occurring_indizes.second != term.operators[i].first_index()) {
+							throw std::runtime_error("Too many index summations!");
+						}
+					}
 				}
 				else {
-					throw std::runtime_error("Expected only Sigma and SigmaPrime as indizes!");
+					std::cerr << term << std::endl;
+					throw std::runtime_error("Expected only mutable indizes!");
+				}
+			}
+			for (size_t i = 1U; i < term.operators.size(); ++i) {
+				if (term.operators[i].first_index() == occurring_indizes.first) {
+					term.operators[i].set_first_index(occurring_indizes.second);
+				}
+				else if (term.operators[i].first_index() == occurring_indizes.second) {
+					term.operators[i].set_first_index(occurring_indizes.first);
 				}
 			}
 			term.rename_momenta('k', 'x');
@@ -286,56 +303,7 @@ inline void coulomb_transform() {
 	std::copy_if(second_commutation_result.begin(), second_commutation_result.end(), hexatic_contribution.begin(), [](const Term& term) { return (term.count_fermions() == 6); });
 
 	std::erase_if(second_commutation_result, [](const Term& term) { return (term.contains_boson() || term.operators.size() == 6U); });
-
-	for (auto& term : second_commutation_result) {
-		{
-			Momentum& first_momentum = term.operators[0].momentum;
-			if (first_momentum != Momentum('k')) {
-				if (first_momentum.momentum_list.size() == 1U) {
-					const MomentumSymbol::name_type original = first_momentum.momentum_list[0].name;
-					term.rename_momenta(original, 'x');
-					term.rename_momenta('k', original);
-					term.rename_momenta('x', 'k');
-				} 
-				else {
-					int k_pos = first_momentum.is_used_at('k');
-					assert(k_pos > -1);
-					Momentum replacement = Momentum('x') - first_momentum + Momentum(first_momentum.momentum_list[k_pos]);
-					term.transform_momentum_sum(first_momentum.momentum_list[k_pos].name, replacement, 'x');
-					term.rename_momenta('x', 'k');
-				}
-			}
-		}
-		{
-			Momentum& second_momentum = term.operators[1].momentum;
-			if (second_momentum != Momentum('l')) {
-				int l_pos = second_momentum.is_used_at('l');
-				assert(l_pos > -1);
-				Momentum replacement = Momentum('x') - second_momentum + Momentum(second_momentum.momentum_list[l_pos]);
-				term.transform_momentum_sum(second_momentum.momentum_list[l_pos].name, replacement, 'x');
-				term.rename_momenta('x', 'l');
-			}
-		}
-		{
-			Momentum& third_momentum = term.operators[2].momentum;
-			int q_pos = third_momentum.is_used_at('q');
-			assert(q_pos > -1);
-			int l_pos = third_momentum.is_used_at('l');
-			assert(l_pos > -1);
-			Momentum replacement = Momentum('x') - third_momentum + Momentum(third_momentum.momentum_list[q_pos]) + Momentum(third_momentum.momentum_list[l_pos]);
-			if(third_momentum.momentum_list[q_pos].factor  < 0) {
-				replacement.flip_momentum();
-			}
-			term.transform_momentum_sum(third_momentum.momentum_list[q_pos].name, replacement, 'x');
-			term.rename_momenta('x', 'q');
-
-			q_pos = third_momentum.is_used_at('q');
-			assert(q_pos == 1);
-			if (third_momentum.momentum_list[q_pos].factor > 0) {
-				term.invert_momentum_sum('q');
-			}
-		}
-	}
+	
 	{
 		// We are allowed to change the p in any manner we like - to obtain the same notation across all terms we do the following:
 		Term* term_ptr = &(second_commutation_result[0]);
@@ -361,55 +329,6 @@ inline void coulomb_transform() {
 		<< second_commutation_result
 		<< "\\end{align*}" << std::endl;
 	second_commutation_result[3].invert_momentum_sum('p');
-
-	/*std::cout << "Inserting the definitions for $A$ and $B$ yields" << std::endl;
-	std::cout << "\\begin{align*}\n\t\\partial_{\\lambda} V(\\lambda; k, l, q) \\approx - \\sum_{p} \\bigg\\{ ";
-	std::array<Coefficient, 4> M_lambdas;
-	M_lambdas.fill(Coefficient("M_{\\lambda}"));
-	std::array<std::array<Coefficient, 3>, 4> in_signums;
-	in_signums.fill({ Coefficient("\\epsilon"), Coefficient("\\epsilon"), Coefficient("\\omega") });
-	for (size_t i = 0U; i < second_commutation_result.size(); ++i) {
-		// The first coefficient is always A or B
-		const Coefficient& term_coeff = second_commutation_result[i].coefficients[0];
-		assert(term_coeff.name == "A" || term_coeff.name == "B");
-		M_lambdas[i].inversion_symmetry = false;
-		M_lambdas[i].momenta.resize(2);
-		if (term_coeff.name == "A") {
-			M_lambdas[i].momenta[0] = term_coeff.momenta[0];
-			M_lambdas[i].momenta[1] = term_coeff.momenta[1];
-		} 
-		else {
-			M_lambdas[i].momenta[0] = term_coeff.momenta[0] + term_coeff.momenta[1];
-			M_lambdas[i].momenta[1] = -term_coeff.momenta[1];
-			M_lambdas[i].is_daggered = true;
-		}
-
-		in_signums[i][0].momenta.push_back(term_coeff.momenta[0] + term_coeff.momenta[1]);
-		in_signums[i][1].momenta.push_back(term_coeff.momenta[0]);
-		in_signums[i][2].momenta.push_back(term_coeff.name == "A" ? -term_coeff.momenta[1] : term_coeff.momenta[1]);
-		
-		if(i > 0) {
-			std::cout << "\t+ ";
-		}
-		std::cout << "&" << M_lambdas[i] << " \\sgn \\left[ ";
-		for(int j = 0; j < 3; ++j) {
-			if (j == 1) {
-				std::cout << " - ";
-			}
-			else if (j == 2) {
-				std::cout << (term_coeff.name == "A" ? "+" : "-");
-			}
-			std::cout << in_signums[i][j];
-		}
-		std::cout << " \\right]" << second_commutation_result[i].coefficients[1];
-		if(i < second_commutation_result.size() - 1) std::cout << "\\\\\n";
-	}
-	std::cout << " \\bigg\\}\n\\end{align*}" << std::endl;*/
-
-	//second_commutation_result[0].swap_momenta('k', 'l');
-	//second_commutation_result[0].invert_momentum('q');
-	//second_commutation_result[1].swap_momenta('k', 'l');
-	//second_commutation_result[1].invert_momentum('q');
 
 	std::cout << "\\newpage\nWe are allowed to transform $k \\to l, l \\to k, q \\to -q$ without affecting the operators part of the terms. "
 		<< "Therefore, the potential must also be symmetric under this transformation (or can be constructed as such). We perfom that in line 2 and 4. "

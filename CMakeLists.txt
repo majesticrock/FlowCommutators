@@ -10,10 +10,6 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 list(APPEND CMAKE_PREFIX_PATH "~/usr/local")
 
-include_directories(
-    $ENV{HOME}/usr/local/include
-)
-
 add_executable(FlowCommutators 
     sources/FlowCommutators.cpp
 )
@@ -36,8 +32,9 @@ else()
     message(FATAL_ERROR "Unsupported compiler ${CMAKE_CXX_COMPILER_ID}. Only GCC is supported.")
 endif()
 
-target_include_directories(FlowCommutators PRIVATE ${Boost_INCLUDE_DIRS})
-
-find_package(mrock REQUIRED)
-target_include_directories(FlowCommutators PUBLIC ${mrock_INCLUDE_DIRS})
+find_package(mrock 
+    REQUIRED 
+    COMPONENTS 
+        symbolic_operators 
+)
 target_link_libraries(FlowCommutators PUBLIC ${mrock_LIBRARIES})
