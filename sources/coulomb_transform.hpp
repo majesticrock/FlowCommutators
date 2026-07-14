@@ -141,7 +141,7 @@ inline void coulomb_transform() {
 		if (term.operators[2].momentum.momentum_list.size() == 2) {
 			// Starting at 1, because the boson does not have a spin
 			std::pair<Index, Index> occurring_indizes{Index::UndefinedIndex, Index::UndefinedIndex};
-			for (size_t i = 1U; i < term.operators.size(); ++i) {
+			for (std::size_t i = 1U; i < term.operators.size(); ++i) {
 				if (is_mutable(term.operators[i].first_index())) {
 					if (occurring_indizes.first == Index::UndefinedIndex) { 
 						occurring_indizes.first = term.operators[i].first_index();
@@ -160,7 +160,7 @@ inline void coulomb_transform() {
 					throw std::runtime_error("Expected only mutable indizes!");
 				}
 			}
-			for (size_t i = 1U; i < term.operators.size(); ++i) {
+			for (std::size_t i = 1U; i < term.operators.size(); ++i) {
 				if (term.operators[i].first_index() == occurring_indizes.first) {
 					term.operators[i].set_first_index(occurring_indizes.second);
 				}

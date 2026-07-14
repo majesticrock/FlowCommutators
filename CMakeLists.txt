@@ -15,21 +15,15 @@ add_executable(FlowCommutators
 )
 
 # Check if using GCC and adjust C++ standard flag if necessary
-if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
-    # Check GCC version
-    if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 11.0)
-        message(FATAL_ERROR "GCC version ${CMAKE_CXX_COMPILER_VERSION} is not supported. GCC 12.1 or newer is required for C++20 support.")
-    endif()
-    # Use the appropriate flag for GCC
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     target_compile_options(FlowCommutators PRIVATE
         -Wall
         -Wno-sign-compare
-        -fopenmp
         -march=native
         -O3
     )
 else()
-    message(FATAL_ERROR "Unsupported compiler ${CMAKE_CXX_COMPILER_ID}. Only GCC is supported.")
+    message(FATAL_ERROR "Unsupported compiler ${CMAKE_CXX_COMPILER_ID}. Only GCC|Clang is supported.")
 endif()
 
 find_package(mrock 

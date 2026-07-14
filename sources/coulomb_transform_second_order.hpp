@@ -355,7 +355,7 @@ inline void coulomb_transform_second_order() {
 	M_lambdas.fill(Coefficient("M_{\\lambda}"));
 	std::array<std::array<Coefficient, 3>, 4> in_signums;
 	in_signums.fill({ Coefficient("\\epsilon"), Coefficient("\\epsilon"), Coefficient("\\omega") });
-	for (size_t i = 0U; i < second_commutation_result.size(); ++i) {
+	for (std::size_t i = 0U; i < second_commutation_result.size(); ++i) {
 		// The first coefficient is always A or B
 		const Coefficient& term_coeff = second_commutation_result[i].coefficients[0];
 		assert(term_coeff.name == "A" || term_coeff.name == "B");
