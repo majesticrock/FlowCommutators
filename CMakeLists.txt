@@ -4,9 +4,25 @@ cmake_minimum_required(VERSION 3.30)
 
 project(FlowCommutators VERSION 1.0)
 
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
-set(CMAKE_CXX_EXTENSIONS OFF)
+#
+# Set local settings and set the default build type as Release
+#
+
+list(APPEND CMAKE_PREFIX_PATH "$ENV{HOME}/usr/local")
+
+set(default_build_type "Release")
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+  set(CMAKE_BUILD_TYPE "${default_build_type}" CACHE
+      STRING "Choose the type of build." FORCE)
+  # Set the possible values of build type for cmake-gui
+  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS
+    "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+endif()
+message(STATUS "Build type is '${CMAKE_BUILD_TYPE}'.")
+
+#
+# Library specifics
+#
 
 list(APPEND CMAKE_PREFIX_PATH "$ENV{HOME}/usr/local")
 
